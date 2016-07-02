@@ -6,7 +6,6 @@ public class GameUIManager : SingletonBehaviour<GameUIManager> {
 
     public Canvas InGameCanvas = null;
     public Canvas MenuCanvas = null;
-    public Canvas SkillBookCanvas = null;
 
     void Awake()
     {

@@ -9,7 +9,14 @@ public enum State
 
 public class GameStateManager : SingletonBehaviour<GameStateManager> {
 
+    [SerializeField]
     private State currentState;
+
+    void Awake()
+    {
+        Inst();
+        currentState = State.INGAME;
+    }
 
     public State getState()
     {

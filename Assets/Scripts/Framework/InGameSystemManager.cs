@@ -9,12 +9,14 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     void Start()
     {
-        Inst();
+        if (GameStateManager.Inst().getState() == State.PAUSE)
+            GameStateManager.Inst().setState(State.INGAME);
+
     }
 
     public void addCombination(char c)
     {
-        Combination = Combination + 'c';
+        Combination = Combination + c;
     }
 
     public string getCombination()
@@ -43,9 +45,32 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         {
             if (item.Combination.CompareTo(Combination) == 0)
             {
+                Debug.Log("found skill : " + item);
                 return item;
             }
         }
         return null;
+    }
+
+    public void Attack(ObjectMob mob)
+    {
+        Skill skill = checkCombination();
+        if (skill == null)
+        {
+            for (int i=0; i<Combination.Length; ++i)
+            {
+                switch (Combination[i])
+                {
+                    case 'C':
+
+                        break;
+                }
+            }
+        }
+        else
+        {
+            //mob's type vs skill type
+            mob.GetDamaged(skill.damage);
+        }
     }
 }

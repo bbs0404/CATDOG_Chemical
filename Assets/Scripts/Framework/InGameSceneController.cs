@@ -13,7 +13,7 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
         gameUI = GameUIManager.Inst();
     }
 
-    void OnButtonClicked(GameObject button)
+    public void OnButtonClicked(GameObject button)
     {
         switch(button.name)
         {
@@ -41,14 +41,15 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
             case "PButton":
                 {
                     InGameSystemManager.Inst().addCombination(button.name[0]);
-                    switch (button.name[0])
-                    {
-                        case 'C':
-                            {
-                                InGameSystemManager.Inst().useCost(1.0f);
-                                break;
-                            }
-                    }
+                    //switch (button.name[0])
+                    //{
+                    //    case 'C':
+                    //        {
+                    //            InGameSystemManager.Inst().useCost(1.0f);
+                    //            break;
+                    //        }
+                    //}
+                    Debug.Log("current combination : " + InGameSystemManager.Inst().getCombination());
                     break;
                 }
             case "SkillBookButton":

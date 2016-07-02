@@ -17,8 +17,14 @@ public class Skill
 
 public class SkillManager : SingletonBehaviour<SkillManager> {
 
+    void Start()
+    {
+        Inst();
+    }
+
     private List<Skill> SkillList = new List<Skill>();
-    void addNewSkill(string str, int dmg, Type type)
+
+    public void addNewSkill(string str, int dmg, Type type)
     {
         Skill skill = new Skill(str, dmg, type);
         SkillList.Add(skill);
