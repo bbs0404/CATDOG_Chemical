@@ -20,7 +20,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
 
     void Start()
     {
+        //Load Data from Save
+    }
 
+    public ObjectPlayer getPlayer()
+    {
+        return player;
     }
 
     public void setHat(ObjectArmor armor)

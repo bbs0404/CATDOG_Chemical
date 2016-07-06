@@ -3,11 +3,9 @@ using System.Collections;
 
 public class ObjectUnit : MonoBehaviour {
     [SerializeField]
-    float MaxHP, CurrentHP;
+    private float MaxHP, CurrentHP;
     [SerializeField]
-    float EXP;
-    [SerializeField]
-    private int Level, Attack, Defend;
+    private int Level, Attack, Defend, EXP;
 
     public float getHP()
     {
@@ -19,16 +17,30 @@ public class ObjectUnit : MonoBehaviour {
         CurrentHP = newHP;
     }
 
+    public void setMaxHP(float max)
+    {
+        MaxHP = max;
+    }
+
+    public float getMaxHP()
+    {
+        return MaxHP;
+    }
+
     public void GetDamaged(float damage)
     {
         CurrentHP -= damage;
     }
 
-    public float getEXP()
+    public int getEXP()
     {
         return EXP;
     }
 
+    public void setEXP(int exp)
+    {
+        EXP = exp;
+    }
     public int getLevel()
     {
         return Level;

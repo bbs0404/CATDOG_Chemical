@@ -15,4 +15,19 @@ public class ObjectMob : ObjectUnit
     {
         return curType;
     }
+
+    public void mobDead()
+    {
+        if (this.getHP()<=0)
+            PlayerManager.Inst().getPlayer().setEXP(PlayerManager.Inst().getPlayer().getEXP() + this.getEXP());
+        Destroy(this.gameObject);
+    }
+
+    void OnMouseDown()
+    {
+        if (InGameSystemManager.Inst().isAttackReady())
+        {
+            InGameSystemManager.Inst().Attack(this);
+        }
+    }
 }

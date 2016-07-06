@@ -40,15 +40,30 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
             case "OButton":
             case "PButton":
                 {
+                    switch (button.name[0])
+                    {
+                        case 'C':
+                        case 'H':
+                        case 'O':
+                            if (InGameSystemManager.Inst().getCost() < 1)
+                            {
+                                Debug.Log("Not enough cost");
+                                return;
+                            }
+                            InGameSystemManager.Inst().useCost(1.0f);
+                            break;
+                        case 'S':
+                        case 'P':
+                            if (InGameSystemManager.Inst().getCost() < 1.5f)
+                            {
+                                Debug.Log("Not enough cost");
+                                return;
+                            }
+                            InGameSystemManager.Inst().useCost(1.5f);
+                            break;
+                    }
+                    InGameSystemManager.Inst().costTextUpdate();
                     InGameSystemManager.Inst().addCombination(button.name[0]);
-                    //switch (button.name[0])
-                    //{
-                    //    case 'C':
-                    //        {
-                    //            InGameSystemManager.Inst().useCost(1.0f);
-                    //            break;
-                    //        }
-                    //}
                     Debug.Log("current combination : " + InGameSystemManager.Inst().getCombination());
                     break;
                 }

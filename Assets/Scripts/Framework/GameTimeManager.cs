@@ -10,9 +10,7 @@ public class GameTime
 }
 
 public class GameTimeManager : SingletonBehaviour<GameTimeManager> {
-    [SerializeField]
-    private GameStateManager stateManager;
-    
+   
     void Start()
     {
         Inst();
@@ -20,7 +18,7 @@ public class GameTimeManager : SingletonBehaviour<GameTimeManager> {
 
 	public float GetInGameDeltaTime()
     {
-        if (stateManager.getState() == State.INGAME)
+        if (GameStateManager.Inst().getState() == State.INGAME)
         {
             return Time.deltaTime;
         }
