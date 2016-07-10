@@ -16,9 +16,10 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     [SerializeField]
     private string Combination = "";
     private int villageNum; //마을의 넘버
-    private int progress; //진행한 미터
-    private int distance; //마을간의 거리
+    private int progress = 0; //진행한 미터
+    private int distance = 5; //마을간의 거리
     private float waitSecond = 0;
+    private int mob_number;
 
     [SerializeField]
     private float battleTimer = 5.0f;
@@ -27,18 +28,21 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     [SerializeField]
     private bool AttackReady = false;
     private bool InBattle = false;
+    [SerializeField]
+    private AudioSource attack_sfx;
 
     [SerializeField]
     private List<GameObject> mobPrefab;
     private ObjectMob[] enemies;
 
     [SerializeField]
-    private Text CostText;
+    private Text costText, progressText;
 
     void Start()
     {
         if (GameStateManager.Inst().getState() == State.PAUSE)
             GameStateManager.Inst().setState(State.INGAME);
+        progressTextUpdate();
     }
 
     void Update()
@@ -146,14 +150,21 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             mob.GetDamaged(skill.damage + damage);
             Debug.Log(mob.name + " is attacked and get " + (skill.damage + damage).ToString() + " damages");
         }
+        SoundManager.Inst().playAudio(attack_sfx);
         mob.mobDead();
         AttackReady = false;
-        turnOver();
+        checkBattleState();
+        if (!InBattle)
+        {
+            endBattle();
+        }
+        else
+            turnOver();
     }
 
     public void battleStart()
     {
-        int mob_number = Random.Range(1, 4);
+        mob_number = Random.Range(1, 4);
         int mob_seed;
 
         InBattle = true;
@@ -172,6 +183,34 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             enemies[i] = mob.GetComponent<ObjectMob>();            
         }
 
+    }
+
+    public void endBattle()
+    {
+        Combination = "";
+        battleTimer = 5.0f;
+        Debug.Log("Battle is ended");
+        ++progress;
+        if (progress >= distance)
+        {
+            progress = 0;
+        }
+        progressTextUpdate();
+    }
+
+    public void checkBattleState()
+    {
+        if (currentTurn == GameTurn.PLAYER)
+        {
+            if (mob_number <= 0)
+                InBattle = false;
+            else
+                InBattle = true;
+        }
+        else
+        {
+
+        }
     }
 
     public void playerTurn()
@@ -214,6 +253,26 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     public void costTextUpdate()
     {
-        CostText.text = cost.ToString() + " / " + maxCost.ToString();
+        costText.text = cost.ToString() + " / " + maxCost.ToString();
+    }
+    
+    public void progressTextUpdate()
+    {
+        progressText.text = "다음 마을까지 " + progress.ToString() + "/" + distance.ToString() + " M";
+    }
+
+    public void setMobNum(int num)
+    {
+        mob_number = num; ;
+    }
+
+    public int getMobNum()
+    {
+        return mob_number;
+    }
+
+    public bool isInBattle()
+    {
+        return InBattle;
     }
 }

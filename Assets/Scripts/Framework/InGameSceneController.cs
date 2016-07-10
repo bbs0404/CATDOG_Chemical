@@ -40,26 +40,28 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
             case "OButton":
             case "PButton":
                 {
+                    if (!InGameSystemManager.Inst().isInBattle())
+                        return;
                     switch (button.name[0])
                     {
                         case 'C':
                         case 'H':
                         case 'O':
-                            if (InGameSystemManager.Inst().getCost() < 1)
+                            if (InGameSystemManager.Inst().getCost() < 0.5)
                             {
                                 Debug.Log("Not enough cost");
                                 return;
                             }
-                            InGameSystemManager.Inst().useCost(1.0f);
+                            InGameSystemManager.Inst().useCost(0.5f);
                             break;
                         case 'S':
                         case 'P':
-                            if (InGameSystemManager.Inst().getCost() < 1.5f)
+                            if (InGameSystemManager.Inst().getCost() < 1f)
                             {
                                 Debug.Log("Not enough cost");
                                 return;
                             }
-                            InGameSystemManager.Inst().useCost(1.5f);
+                            InGameSystemManager.Inst().useCost(1f);
                             break;
                     }
                     InGameSystemManager.Inst().costTextUpdate();

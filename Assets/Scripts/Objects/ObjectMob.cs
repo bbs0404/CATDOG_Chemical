@@ -18,9 +18,12 @@ public class ObjectMob : ObjectUnit
 
     public void mobDead()
     {
-        if (this.getHP()<=0)
+        if (this.getHP() <= 0)
+        {
             PlayerManager.Inst().getPlayer().setEXP(PlayerManager.Inst().getPlayer().getEXP() + this.getEXP());
-        Destroy(this.gameObject);
+            InGameSystemManager.Inst().setMobNum(InGameSystemManager.Inst().getMobNum() - 1);
+            Destroy(this.gameObject);
+        }
     }
 
     void OnMouseDown()
