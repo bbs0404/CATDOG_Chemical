@@ -35,14 +35,13 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     private List<GameObject> mobPrefab;
     private ObjectMob[] enemies;
 
-    [SerializeField]
-    private Text costText, progressText;
-
     void Start()
     {
         if (GameStateManager.Inst().getState() == State.PAUSE)
             GameStateManager.Inst().setState(State.INGAME);
-        progressTextUpdate();
+        InGameUIManager.Inst().progressTextUpdate();
+        InGameUIManager.Inst().combinationTextUpdate();
+        InGameUIManager.Inst().HPbarUpdate();
     }
 
     void Update()
@@ -75,7 +74,9 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     public void addCombination(char c)
     {
         if (currentTurn == GameTurn.PLAYER)
+        {
             Combination = Combination + c;
+        }
     }
 
     public string getCombination()
@@ -93,6 +94,26 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         cost = newCost;
     }
 
+    public float getMaxCost()
+    {
+        return maxCost;
+    }
+
+    public void setMaxCost(float cost)
+    {
+        maxCost = cost;
+    }
+
+    public int getProgress()
+    {
+        return progress;
+    }
+
+    public int getDistance()
+    {
+        return distance;
+    }
+
     public void useCost(float usage)
     {
         if (usage > cost)
@@ -101,11 +122,6 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             return;
         }
         cost -= usage;
-    }
-
-    public void setMaxCost(float cost)
-    {
-        maxCost = cost;
     }
 
     public Skill checkCombination()
@@ -172,7 +188,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         AttackReady = false;
         maxCost = cost = 1;
 
-        costTextUpdate();
+        InGameUIManager.Inst().costTextUpdate();
 
         enemies = new ObjectMob[mob_number];
         for (int i = 0; i < mob_number; ++i)
@@ -183,6 +199,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             enemies[i] = mob.GetComponent<ObjectMob>();            
         }
 
+        InGameUIManager.Inst().HPbarUpdate();
     }
 
     public void endBattle()
@@ -195,7 +212,9 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         {
             progress = 0;
         }
-        progressTextUpdate();
+        InGameUIManager.Inst().progressTextUpdate();
+        InGameUIManager.Inst().combinationTextUpdate();
+        InGameUIManager.Inst().HPbarUpdate();
     }
 
     public void checkBattleState()
@@ -229,6 +248,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             waitSecond = 1.0f;
         }
         Combination = "";
+        InGameUIManager.Inst().combinationTextUpdate();
         turnOver();
     }
 
@@ -245,20 +265,11 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             cost = ++maxCost;
             if (maxCost > 10)
                 cost = maxCost = 10;
-            costTextUpdate();
+            InGameUIManager.Inst().costTextUpdate();
         }
         else
             currentTurn = GameTurn.PLAYER;
-    }
-
-    public void costTextUpdate()
-    {
-        costText.text = cost.ToString() + " / " + maxCost.ToString();
-    }
-    
-    public void progressTextUpdate()
-    {
-        progressText.text = "다음 마을까지 " + progress.ToString() + "/" + distance.ToString() + " M";
+        InGameUIManager.Inst().HPbarUpdate();
     }
 
     public void setMobNum(int num)

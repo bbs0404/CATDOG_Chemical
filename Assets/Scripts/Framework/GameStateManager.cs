@@ -14,7 +14,6 @@ public class GameStateManager : SingletonBehaviour<GameStateManager> {
 
     void Awake()
     {
-        Inst();
         currentState = State.INGAME;
     }
 

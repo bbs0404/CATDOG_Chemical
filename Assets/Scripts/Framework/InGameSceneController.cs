@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
 
     GameStateManager stateM = null;
-    GameUIManager gameUI = null;
+    InGameUIManager gameUI = null;
 
     void Awake()
     {
         stateM = GameStateManager.Inst();
-        gameUI = GameUIManager.Inst();
+        gameUI = InGameUIManager.Inst();
     }
 
     public void OnButtonClicked(GameObject button)
@@ -42,6 +42,11 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
                 {
                     if (!InGameSystemManager.Inst().isInBattle())
                         return;
+                    if (InGameSystemManager.Inst().getCombination().Length == 6)
+                    {
+                        Debug.Log("Combination length is max");
+                        return;
+                    }
                     switch (button.name[0])
                     {
                         case 'C':
@@ -64,8 +69,9 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
                             InGameSystemManager.Inst().useCost(1f);
                             break;
                     }
-                    InGameSystemManager.Inst().costTextUpdate();
+                    InGameUIManager.Inst().costTextUpdate();
                     InGameSystemManager.Inst().addCombination(button.name[0]);
+                    InGameUIManager.Inst().combinationTextUpdate();
                     Debug.Log("current combination : " + InGameSystemManager.Inst().getCombination());
                     break;
                 }

@@ -28,7 +28,7 @@ public class ObjectMob : ObjectUnit
 
     void OnMouseDown()
     {
-        if (InGameSystemManager.Inst().isAttackReady())
+        if (InGameSystemManager.Inst().isAttackReady() && GameStateManager.Inst().getState() == State.INGAME)
         {
             InGameSystemManager.Inst().Attack(this);
         }
