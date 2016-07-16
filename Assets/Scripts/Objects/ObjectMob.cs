@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class ObjectMob : ObjectUnit
 {
     [SerializeField]
     private Type curType;
+
+    void Start() {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback.AddListener( _ => OnMouseDown() );
+        GetComponent<EventTrigger>().triggers.Add(entry);
+    }
 
     public void setType(Type type)
     {

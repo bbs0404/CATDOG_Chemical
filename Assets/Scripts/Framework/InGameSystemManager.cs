@@ -39,7 +39,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     {
         if (GameStateManager.Inst().getState() == State.PAUSE)
             GameStateManager.Inst().setState(State.INGAME);
-        InGameUIManager.Inst().progressTextUpdate();
+        InGameUIManager.Inst().progressUpdate(progress);
         InGameUIManager.Inst().combinationTextUpdate();
         InGameUIManager.Inst().HPbarUpdate();
     }
@@ -194,7 +194,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         for (int i = 0; i < mob_number; ++i)
         {
             mob_seed = Random.Range(0, 2);
-            GameObject mob = Instantiate(mobPrefab[mob_seed]);
+            GameObject mob = InGameUIManager.Inst().GenerateMob(mobPrefab[mob_seed], i);
             mob.name = "monster" + i.ToString();
             enemies[i] = mob.GetComponent<ObjectMob>();            
         }
@@ -208,13 +208,12 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         battleTimer = 5.0f;
         Debug.Log("Battle is ended");
         ++progress;
-        if (progress >= distance)
-        {
-            progress = 0;
-        }
-        InGameUIManager.Inst().progressTextUpdate();
+        InGameUIManager.Inst().progressUpdate(progress, battleTimer);
         InGameUIManager.Inst().combinationTextUpdate();
         InGameUIManager.Inst().HPbarUpdate();
+        if ( progress >= distance ) {
+            progress = 0;
+        }
     }
 
     public void checkBattleState()
