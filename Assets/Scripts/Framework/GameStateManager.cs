@@ -4,7 +4,8 @@ using System.Collections;
 public enum State
 {
     INGAME,
-    PAUSE
+    PAUSE,
+    END
 }
 
 public class GameStateManager : SingletonBehaviour<GameStateManager> {

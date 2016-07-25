@@ -22,7 +22,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     private int mob_number;
 
     [SerializeField]
-    private float battleTimer = 5.0f;
+    private float battleTimer = 2.5f;
 
     private GameTurn currentTurn = GameTurn.PLAYER;
     [SerializeField]
@@ -54,6 +54,11 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         else if (battleTimer <= 0)
         {
             battleTimer = 1;
+            if (progress >= 5) {
+                GameStateManager.Inst().setState(State.END);
+                InGameUIManager.Inst().resultTextUpdate();
+                InGameUIManager.Inst().OnStateChanged(State.END);
+            }
             battleStart();
         }
         if (waitSecond > 0)
@@ -124,22 +129,10 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         cost -= usage;
     }
 
-    public Skill checkCombination()
-    {
-        foreach (var item in SkillManager.Inst().getSkillList())
-        {
-            if (item.Combination.CompareTo(Combination) == 0)
-            {
-                Debug.Log("found skill : " + item);
-                return item;
-            }
-        }
-        return null;
-    }
-
     public void Attack(ObjectMob mob)
     {
-        Skill skill = checkCombination();
+        Skill? skill = SkillManager.Inst().findSkill(Combination);
+
         int damage = 0;
         for (int i = 0; i < Combination.Length; ++i)
         {
@@ -148,34 +141,51 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                 case 'C':
                 case 'O':
                 case 'H':
-                    damage += 1;
+                    damage += 10;
                     break;
                 case 'S':
                 case 'P':
-                    damage += 2;
+                    damage += 20;
                     break;
             }
         }
-        if (skill == null)
+        if (skill.HasValue)
         {
-            mob.GetDamaged(damage);
-            Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
+            if (skill.Value.global) {
+                var mobs = FindObjectsOfType<ObjectMob>();
+                foreach ( var i in mobs ) {
+                    i.GetDamaged(skill.Value.damage);
+                    Debug.Log(i.name + " is attacked and get " + skill.Value.damage.ToString() + " damages");
+                }
+                mob.GetDamaged(damage);
+                Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
+                foreach ( var i in mobs ) {
+                    i.mobDead();
+                }
+            }
+            else {
+                mob.GetDamaged(skill.Value.damage + damage);
+                Debug.Log(mob.name + " is attacked and get " + (skill.Value.damage + damage).ToString() + " damages");
+                mob.mobDead();
+            }
         }
         else
         {
-            mob.GetDamaged(skill.damage + damage);
-            Debug.Log(mob.name + " is attacked and get " + (skill.damage + damage).ToString() + " damages");
+            mob.GetDamaged(damage);
+            Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
+            mob.mobDead();
         }
         SoundManager.Inst().playAudio(attack_sfx);
-        mob.mobDead();
         AttackReady = false;
         checkBattleState();
         if (!InBattle)
         {
             endBattle();
         }
-        else
+        else {
+            FindObjectOfType<ObjectPlayer>().getAnimator().SetTrigger("attack");
             turnOver();
+        }
     }
 
     public void battleStart()
@@ -211,9 +221,6 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         InGameUIManager.Inst().progressUpdate(progress, battleTimer);
         InGameUIManager.Inst().combinationTextUpdate();
         InGameUIManager.Inst().HPbarUpdate();
-        if ( progress >= distance ) {
-            progress = 0;
-        }
     }
 
     public void checkBattleState()
@@ -243,7 +250,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             if (enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend() > 0)
                 PlayerManager.Inst().getPlayer().GetDamaged(enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend());
             else
-                PlayerManager.Inst().getPlayer().GetDamaged(1.0f);
+                PlayerManager.Inst().getPlayer().GetDamaged(10);
             waitSecond = 1.0f;
         }
         Combination = "";

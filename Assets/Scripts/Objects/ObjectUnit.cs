@@ -3,31 +3,31 @@ using System.Collections;
 
 public class ObjectUnit : MonoBehaviour {
     [SerializeField]
-    private float MaxHP, CurrentHP;
+    private int MaxHP, CurrentHP;
     [SerializeField]
     private int Level, Attack, Defend, EXP;
 
-    public float getHP()
+    public int getHP()
     {
         return CurrentHP;
     }
 
-    public void setHP(float newHP)
+    public void setHP(int newHP)
     {
         CurrentHP = newHP;
     }
 
-    public void setMaxHP(float max)
+    public void setMaxHP(int max)
     {
         MaxHP = max;
     }
 
-    public float getMaxHP()
+    public int getMaxHP()
     {
         return MaxHP;
     }
 
-    public void GetDamaged(float damage)
+    public void GetDamaged(int damage)
     {
         CurrentHP -= damage;
     }
