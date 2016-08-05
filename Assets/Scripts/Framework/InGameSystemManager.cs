@@ -154,26 +154,69 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             if (skill.Value.global) {
                 var mobs = FindObjectsOfType<ObjectMob>();
                 foreach ( var i in mobs ) {
-                    i.GetDamaged(skill.Value.damage);
-                    Debug.Log(i.name + " is attacked and get " + skill.Value.damage.ToString() + " damages");
+                    if (Random.Range(0, 10) <= 10 - (i.getLevel() - PlayerManager.Inst().getPlayer().getLevel()))
+                    {
+                        Debug.Log(i.name + "does not take any damage");
+                        continue; //회피
+                    }
+                    if ((int)(i.getType() + 1) % 3 == (int)skill.Value.type)
+                    {
+                        i.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
+                        Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
+                    }
+                    else if ((int)(i.getType() + 2) % 3 == (int)skill.Value.type)
+                    {
+                        i.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
+                        Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
+                    }
                 }
-                mob.GetDamaged(damage);
+//                mob.GetDamaged(damage);
                 Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
                 foreach ( var i in mobs ) {
                     i.mobDead();
                 }
             }
             else {
-                mob.GetDamaged(skill.Value.damage + damage);
-                Debug.Log(mob.name + " is attacked and get " + (skill.Value.damage + damage).ToString() + " damages");
-                mob.mobDead();
+                if (Random.Range(0, 10) <= 10 - (mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel()))
+                {
+                    Debug.Log(mob.name + "does not take any damage");
+                }
+                else
+                {
+                    if ((int)(mob.getType() + 1) % 3 == (int)skill.Value.type)
+                    {
+                        mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
+                        Debug.Log(mob.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
+                    }
+                    else if ((int)(mob.getType() + 2) % 3 == (int)skill.Value.type)
+                    {
+                        mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
+                        Debug.Log(mob.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
+                    }
+                    mob.mobDead();
+                }
             }
         }
         else
         {
-            mob.GetDamaged(damage);
-            Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
-            mob.mobDead();
+            if (Random.Range(0, 10) <= 10 - (mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel()))
+            {
+                Debug.Log(mob.name + "does not take any damage");
+            }
+            else
+            {
+                if ((int)(mob.getType() + 1) % 3 == (int)skill.Value.type)
+                {
+                    mob.GetDamaged((int)(damage * 1.5));
+                    Debug.Log(mob.name + " is attacked and get " + (int)(damage * 1.5) + " damages");
+                }
+                else if ((int)(mob.getType() + 2) % 3 == (int)skill.Value.type)
+                {
+                    mob.GetDamaged((int)(damage * 0.5));
+                    Debug.Log(mob.name + " is attacked and get " + (int)(damage * 0.5) + " damages");
+                }
+                mob.mobDead();
+            }
         }
         SoundManager.Inst().playAudio(attack_sfx);
         AttackReady = false;

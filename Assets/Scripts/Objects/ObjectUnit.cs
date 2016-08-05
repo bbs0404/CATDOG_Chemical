@@ -41,6 +41,12 @@ public class ObjectUnit : MonoBehaviour {
     {
         EXP = exp;
     }
+
+    public void setLevel(int lev)
+    {
+        Level = lev;
+    }
+
     public int getLevel()
     {
         return Level;
