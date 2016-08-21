@@ -6,6 +6,7 @@ public class ObjectUnit : MonoBehaviour {
     private int MaxHP, CurrentHP;
     [SerializeField]
     private int Level, Attack, Defend, EXP;
+    private bool burn = false, freeze = false, corrosion = false;
 
     public int getHP()
     {
@@ -70,5 +71,18 @@ public class ObjectUnit : MonoBehaviour {
     public int getDefend()
     {
         return Defend;
+    }
+
+    public bool isBurn()
+    {
+        return burn;
+    }
+    public bool isFreeze()
+    {
+        return freeze;
+    }
+    public bool isCorrosion()
+    {
+        return corrosion;
     }
 }
