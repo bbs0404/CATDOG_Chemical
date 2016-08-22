@@ -310,6 +310,13 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     {
         if (currentTurn == GameTurn.PLAYER)
         {
+            for (int i = 0; i < enemies.Length; ++i)
+            {
+                if (enemies[i].isCorrosion())
+                {
+                    enemies[i].GetDamaged(2);
+                }
+            }
             currentTurn = GameTurn.ENEMY;
             cost = ++maxCost;
             if (maxCost > 10)
