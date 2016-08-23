@@ -30,40 +30,7 @@ public class SkillBookController : MonoBehaviour {
 		page = 1;
 		sortKey = 0;
 
-		// TODO: remove block
-		// Create temporary skills.
-		skillMgr.addNewSkill("CC", 50, Type.foo);
-		skillMgr.addNewSkill ("HH", 25, Type.foo);
-		skillMgr.addNewSkill ("OO", 30, Type.foo);
-		skillMgr.addNewSkill ("COO", 45, Type.foo);
-		skillMgr.addNewSkill ("HHO", 20, Type.foo);
-		skillMgr.addNewSkill ("HHOO", 45, Type.foo);
-		skillMgr.addNewSkill ("COOHH", 75, Type.foo);
-
-		skillMgr.addNewSkill ("CHOCHO", 55, Type.foo);
-		skillMgr.addNewSkill ("COCHO", 55, Type.foo);
-		skillMgr.addNewSkill ("HOOCOO", 55, Type.foo);
-		skillMgr.addNewSkill ("COOCOO", 55, Type.foo);
-		skillMgr.addNewSkill ("OOHHCCC", 55, Type.foo);
-		skillMgr.addNewSkill ("HHHHC", 55, Type.foo);
-		skillMgr.addNewSkill ("OHHHC", 55, Type.foo);
-		skillMgr.addNewSkill ("OOOOC", 55, Type.foo);
-		skillMgr.addNewSkill ("OOHHC", 55, Type.foo);
-		skillMgr.addNewSkill ("OOHCC", 55, Type.foo);
-		skillMgr.addNewSkill ("CCOHH", 55, Type.foo);
-		skillMgr.getSkillListAll () [0].unlocked = true;
-		skillMgr.getSkillListAll () [1].unlocked = true;
-		skillMgr.getSkillListAll () [2].unlocked = true;
-		skillMgr.getSkillListAll () [3].unlocked = true;
-		skillMgr.getSkillListAll () [4].unlocked = true;
-		skillMgr.getSkillListAll () [5].unlocked = true;
-		skillMgr.getSkillListAll () [6].unlocked = true;
-		skillMgr.getSkillListAll () [9].unlocked = true;
-		skillMgr.getSkillListAll () [12].unlocked = true;
-		skillMgr.getSkillListAll () [13].unlocked = true;
-
-
-		refreshPage ();
+        refreshPage ();
 	}
 
 

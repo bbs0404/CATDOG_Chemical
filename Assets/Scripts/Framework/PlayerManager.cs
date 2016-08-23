@@ -120,4 +120,13 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
             player.setHP(player.getHP() - prev.getHP() + now.getHP());
         }
     }
+
+    public void levelUp()
+    {
+        int atk = player.getAttack(), def = player.getDefend(), hp = player.getMaxHP();
+        player.setLevel(player.getLevel() + 1);
+        player.setAttack(Mathf.RoundToInt((float)(atk + player.getLevel() * 19 + atk * 0.1)));
+        player.setMaxHP(Mathf.RoundToInt((float)(hp + player.getLevel() * 7 + def * 0.1)));
+        player.setDefend(Mathf.RoundToInt((float)(def + player.getLevel() * 17 + def * 0.13)));
+    }
 }

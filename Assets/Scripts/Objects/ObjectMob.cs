@@ -5,7 +5,7 @@ using System.Collections;
 public class ObjectMob : ObjectUnit
 {
     [SerializeField]
-    private Type curType;
+    private StateType curType;
 
     void Start() {
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -14,12 +14,12 @@ public class ObjectMob : ObjectUnit
         GetComponent<EventTrigger>().triggers.Add(entry);
     }
 
-    public void setType(Type type)
+    public void setType(StateType type)
     {
         curType = type;
     }
 
-    public Type getType()
+    public StateType getType()
     {
         return curType;
     }

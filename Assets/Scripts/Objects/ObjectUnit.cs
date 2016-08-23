@@ -3,31 +3,32 @@ using System.Collections;
 
 public class ObjectUnit : MonoBehaviour {
     [SerializeField]
-    private float MaxHP, CurrentHP;
+    private int MaxHP, CurrentHP;
     [SerializeField]
     private int Level, Attack, Defend, EXP;
+    private bool burn = false, freeze = false, corrosion = false;
 
-    public float getHP()
+    public int getHP()
     {
         return CurrentHP;
     }
 
-    public void setHP(float newHP)
+    public void setHP(int newHP)
     {
         CurrentHP = newHP;
     }
 
-    public void setMaxHP(float max)
+    public void setMaxHP(int max)
     {
         MaxHP = max;
     }
 
-    public float getMaxHP()
+    public int getMaxHP()
     {
         return MaxHP;
     }
 
-    public void GetDamaged(float damage)
+    public void GetDamaged(int damage)
     {
         CurrentHP -= damage;
     }
@@ -41,6 +42,12 @@ public class ObjectUnit : MonoBehaviour {
     {
         EXP = exp;
     }
+
+    public void setLevel(int lev)
+    {
+        Level = lev;
+    }
+
     public int getLevel()
     {
         return Level;
@@ -64,5 +71,18 @@ public class ObjectUnit : MonoBehaviour {
     public int getDefend()
     {
         return Defend;
+    }
+
+    public bool isBurn()
+    {
+        return burn;
+    }
+    public bool isFreeze()
+    {
+        return freeze;
+    }
+    public bool isCorrosion()
+    {
+        return corrosion;
     }
 }
