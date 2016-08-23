@@ -145,7 +145,8 @@ public class CompoundElementController : MonoBehaviour {
 		return (
 		    inventoryManager.getProton () >= requireProtonNum &&
 		    inventoryManager.getNeutron () >= requireNeutronNum &&
-		    inventoryManager.getElectron () >= requireElectronNum
+		    inventoryManager.getElectron () >= requireElectronNum &&
+			!(PlayerManager.Inst ().Element [this.ElementNumber - 1])
 		);
 	}
 
