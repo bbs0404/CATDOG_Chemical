@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerManager : SingletonBehaviour<PlayerManager> {
@@ -17,6 +17,9 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
     private ObjectArmor shoes = null;
     [SerializeField]
     private ObjectArmor weapon = null;
+    
+    public bool[] Raw = new bool[4] { true, false, false, false };
+    public bool[] Element = new bool[20] { true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 
     void Start()
     {
