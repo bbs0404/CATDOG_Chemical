@@ -120,4 +120,8 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
             player.setHP(player.getHP() - prev.getHP() + now.getHP());
         }
     }
+       public bool[] Raw = new bool[4] { true, false, false, false };
+       public bool[] Element = new bool[20] { true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+    
+
 }
