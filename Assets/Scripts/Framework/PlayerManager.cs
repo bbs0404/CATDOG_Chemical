@@ -128,5 +128,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         player.setAttack(Mathf.RoundToInt((float)(atk + player.getLevel() * 19 + atk * 0.1)));
         player.setMaxHP(Mathf.RoundToInt((float)(hp + player.getLevel() * 7 + def * 0.1)));
         player.setDefend(Mathf.RoundToInt((float)(def + player.getLevel() * 17 + def * 0.13)));
+        player.setEXP(player.getEXP() - player.getEXPtoLevelUP());
+        player.setEXPtoLevelUP(player.getEXPtoLevelUP() + (int)(player.getLevel() * 25.7) + 53);
     }
 }

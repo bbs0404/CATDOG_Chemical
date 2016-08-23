@@ -6,7 +6,8 @@ public class ObjectUnit : MonoBehaviour {
     private int MaxHP, CurrentHP;
     [SerializeField]
     private int Level, Attack, Defend, EXP;
-    private bool burn = false, freeze = false, corrosion = false;
+    private StatusEffect curState =StatusEffect.None;
+    private int statusRemainTurn = 0;
 
     public int getHP()
     {
@@ -72,17 +73,20 @@ public class ObjectUnit : MonoBehaviour {
     {
         return Defend;
     }
-
-    public bool isBurn()
+    public StatusEffect getStatusEffect()
     {
-        return burn;
+        return curState;
     }
-    public bool isFreeze()
+    public void setStatusEffect(StatusEffect newState)
     {
-        return freeze;
+        curState = newState;
     }
-    public bool isCorrosion()
+    public int getStatusRemainTurn()
     {
-        return corrosion;
+        return statusRemainTurn;
+    }
+    public void setStatusRemainTurn(int turn)
+    {
+        statusRemainTurn = turn;
     }
 }
