@@ -6,7 +6,8 @@ public class ObjectMob : ObjectUnit
 {
     [SerializeField]
     private StateType curType;
-
+    [SerializeField]
+    private int mob_seed;
     void Start() {
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerDown;
@@ -30,6 +31,19 @@ public class ObjectMob : ObjectUnit
         {
             PlayerManager.Inst().getPlayer().setEXP(PlayerManager.Inst().getPlayer().getEXP() + this.getEXP());
             InGameSystemManager.Inst().setMobNum(InGameSystemManager.Inst().getMobNum() - 1);
+            switch (mob_seed)
+            {
+                case 0:
+                    InventoryManager.Inst().setProton(InventoryManager.Inst().getProton() + Random.Range(6, 11));
+                    InventoryManager.Inst().setNeutron(InventoryManager.Inst().getNeutron() + Random.Range(2, 7));
+                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(4, 9));
+                    break;
+                case 1:
+                    InventoryManager.Inst().setProton(InventoryManager.Inst().getProton() + Random.Range(2, 7));
+                    InventoryManager.Inst().setNeutron(InventoryManager.Inst().getNeutron() + Random.Range(4, 9));
+                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(6, 11));
+                    break;
+            }
             Destroy(this.gameObject);
         }
     }
@@ -40,5 +54,15 @@ public class ObjectMob : ObjectUnit
         {
             InGameSystemManager.Inst().Attack(this);
         }
+    }
+
+    public int getmobSeed()
+    {
+        return mob_seed;
+    }
+
+    public void setmobSeed(int seed)
+    {
+        mob_seed = seed;
     }
 }

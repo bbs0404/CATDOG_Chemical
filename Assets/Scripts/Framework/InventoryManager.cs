@@ -17,7 +17,29 @@ class CollectedElements
 }
 
 public class InventoryManager : SingletonBehaviour<InventoryManager>{
-    int proton; //양성자
-    int neutron; //중성자
-    int electron; // 전자
+    private int proton = 0, neutron = 0, electron = 0;
+
+    public int getProton()
+    {
+        return proton;
+    }
+    public int getNeutron()
+    {
+        return neutron;
+    }
+    public int getElectron(){
+        return electron;
+    }
+    public void setProton(int num)
+    {
+        proton = num;
+    }
+    public void setNeutron(int num)
+    {
+        neutron = num;
+    }
+    public void setElectron(int num)
+    {
+        electron = num;
+    }
 }

@@ -11,6 +11,9 @@ enum GameTurn
 
 public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 {
+    private const float burnDamage = 1.25f;
+    private const float freezeDamage = 0.75f;
+
     private float cost;
     private float maxCost;
     [SerializeField]
@@ -161,16 +164,43 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                     }
                     if ((int)(i.getType() + 1) % 3 == (int)skill.Value.type)
                     {
-                        i.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
+                        if (i.getStatusEffect() == StatusEffect.Burn)
+                            i.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * burnDamage));
+                        else if (i.getStatusEffect() == StatusEffect.Frostbite)
+                            i.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * freezeDamage));
+                        else
+                            i.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
                         Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
                     }
                     else if ((int)(i.getType() + 2) % 3 == (int)skill.Value.type)
                     {
-                        i.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
+                        if (i.getStatusEffect() == StatusEffect.Burn)
+                            i.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * burnDamage));
+                        else if (i.getStatusEffect() == StatusEffect.Frostbite)
+                            i.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * freezeDamage));
+                        else
+                            i.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
                         Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
                     }
+                    else
+                    {
+                        if (i.getStatusEffect() == StatusEffect.Burn)
+                            i.GetDamaged((int)((skill.Value.damage + damage) * burnDamage));
+                        else if (i.getStatusEffect() == StatusEffect.Frostbite)
+                            i.GetDamaged((int)((skill.Value.damage + damage) * freezeDamage));
+                        else
+                            i.GetDamaged((int)((skill.Value.damage + damage)));
+                    }
+                    if (skill.Value.statusEffect != StatusEffect.None)
+                    {
+                        if (Random.Range(0, 20) < 1)
+                        {
+                            i.setStatusEffect(skill.Value.statusEffect);
+                            i.setStatusRemainTurn(Random.Range(4, 8));
+                            Debug.Log(i.name + " get " + skill.Value.statusEffect.ToString());
+                        }
+                    }
                 }
-//                mob.GetDamaged(damage);
                 Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
                 foreach ( var i in mobs ) {
                     i.mobDead();
@@ -185,13 +215,41 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                 {
                     if ((int)(mob.getType() + 1) % 3 == (int)skill.Value.type)
                     {
-                        mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
+                        if (mob.getStatusEffect() == StatusEffect.Burn)
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * burnDamage));
+                        else if (mob.getStatusEffect() == StatusEffect.Frostbite)
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * freezeDamage));
+                        else
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
                         Debug.Log(mob.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
                     }
                     else if ((int)(mob.getType() + 2) % 3 == (int)skill.Value.type)
                     {
-                        mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
+                        if (mob.getStatusEffect() == StatusEffect.Burn)
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * burnDamage));
+                        else if (mob.getStatusEffect() == StatusEffect.Frostbite)
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * freezeDamage));
+                        else
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
                         Debug.Log(mob.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
+                    }
+                    else
+                    {
+                        if (mob.getStatusEffect() == StatusEffect.Burn)
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * burnDamage));
+                        else if (mob.getStatusEffect() == StatusEffect.Frostbite)
+                            mob.GetDamaged((int)((skill.Value.damage + damage) * freezeDamage));
+                        else
+                            mob.GetDamaged((int)((skill.Value.damage + damage)));
+                    }
+                    if (skill.Value.statusEffect != StatusEffect.None)
+                    {
+                        if (Random.Range(0, 10) < 1)
+                        {
+                            mob.setStatusEffect(skill.Value.statusEffect);
+                            mob.setStatusRemainTurn(Random.Range(4, 8));
+                            Debug.Log(mob.name + " get " + skill.Value.statusEffect.ToString());
+                        }
                     }
                     mob.mobDead();
                 }
@@ -205,16 +263,8 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             }
             else
             {
-                if ((int)(mob.getType() + 1) % 3 == (int)skill.Value.type)
-                {
-                    mob.GetDamaged((int)(damage * 1.5));
-                    Debug.Log(mob.name + " is attacked and get " + (int)(damage * 1.5) + " damages");
-                }
-                else if ((int)(mob.getType() + 2) % 3 == (int)skill.Value.type)
-                {
-                    mob.GetDamaged((int)(damage * 0.5));
-                    Debug.Log(mob.name + " is attacked and get " + (int)(damage * 0.5) + " damages");
-                }
+                mob.GetDamaged((int)(damage));
+                Debug.Log(mob.name + " is attacked and get " + (int)(damage) + " damages");
                 mob.mobDead();
             }
         }
@@ -248,6 +298,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         {
             mob_seed = Random.Range(0, 2);
             GameObject mob = InGameUIManager.Inst().GenerateMob(mobPrefab[mob_seed], i);
+            mob.GetComponent<ObjectMob>().setmobSeed(mob_seed);
             mob.name = "monster" + i.ToString();
             enemies[i] = mob.GetComponent<ObjectMob>();            
         }
@@ -312,10 +363,20 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         {
             for (int i = 0; i < enemies.Length; ++i)
             {
-                if (enemies[i].isCorrosion())
+                if (enemies[i].getStatusEffect() == StatusEffect.Corrosion)
                 {
-                    enemies[i].GetDamaged(2);
+                    enemies[i].GetDamaged((int)(enemies[i].getMaxHP() * 0.05f));
                 }
+                if (enemies[i].getStatusEffect() != StatusEffect.None)
+                {
+                    enemies[i].setStatusRemainTurn(enemies[i].getStatusRemainTurn() - 1);
+                    if (enemies[i].getStatusRemainTurn() <= 0)
+                        enemies[i].setStatusEffect(StatusEffect.None);
+                }
+            }
+            while (PlayerManager.Inst().getPlayer().getEXP() >= PlayerManager.Inst().getPlayer().getEXPtoLevelUP())
+            {
+                PlayerManager.Inst().levelUp();
             }
             currentTurn = GameTurn.ENEMY;
             cost = ++maxCost;

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class ObjectPlayer : ObjectUnit {
+
+    private int EXPtoLevelUp = 100;
     private Animator animator;
 
     public Animator getAnimator() {
@@ -17,5 +19,13 @@ public class ObjectPlayer : ObjectUnit {
             InGameUIManager.Inst().resultTextUpdate();
             InGameUIManager.Inst().OnStateChanged(State.END);
         }
+    }
+    public int getEXPtoLevelUP()
+    {
+        return EXPtoLevelUp;
+    }
+    public void setEXPtoLevelUP(int exp)
+    {
+        EXPtoLevelUp = exp;
     }
 }
