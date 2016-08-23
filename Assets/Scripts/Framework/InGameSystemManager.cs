@@ -139,6 +139,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     public void Attack(ObjectMob mob)
     {
+        ObjectPlayer player = PlayerManager.Inst().getPlayer();
         Skill? skill = SkillManager.Inst().findSkill(Combination);
 
         int damage = 0;
@@ -147,13 +148,15 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             switch (Combination[i])
             {
                 case 'C':
+                    damage += (int)(player.getAttack() * 0.5f);
+                    break;
                 case 'O':
                 case 'H':
-                    damage += 10;
+                    damage += (int)(player.getAttack() * 0.25f);
                     break;
                 case 'S':
                 case 'P':
-                    damage += 20;
+                    damage += (int)(player.getAttack() * 0.75f);
                     break;
             }
         }
@@ -170,31 +173,31 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                     if ((int)(i.getType() + 1) % 3 == (int)skill.Value.type)
                     {
                         if (i.getStatusEffect() == StatusEffect.Burn)
-                            i.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * burnDamage));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * burnDamage));
                         else if (i.getStatusEffect() == StatusEffect.Frostbite)
-                            i.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * freezeDamage));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * freezeDamage));
                         else
-                            i.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5));
                         Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
                     }
                     else if ((int)(i.getType() + 2) % 3 == (int)skill.Value.type)
                     {
                         if (i.getStatusEffect() == StatusEffect.Burn)
-                            i.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * burnDamage));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * burnDamage));
                         else if (i.getStatusEffect() == StatusEffect.Frostbite)
-                            i.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * freezeDamage));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * freezeDamage));
                         else
-                            i.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5));
                         Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
                     }
                     else
                     {
                         if (i.getStatusEffect() == StatusEffect.Burn)
-                            i.GetDamaged((int)((skill.Value.damage + damage) * burnDamage));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * burnDamage));
                         else if (i.getStatusEffect() == StatusEffect.Frostbite)
-                            i.GetDamaged((int)((skill.Value.damage + damage) * freezeDamage));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * freezeDamage));
                         else
-                            i.GetDamaged((int)((skill.Value.damage + damage)));
+                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage)));
                     }
                     if (skill.Value.statusEffect != StatusEffect.None)
                     {
@@ -221,31 +224,31 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                     if ((int)(mob.getType() + 1) % 3 == (int)skill.Value.type)
                     {
                         if (mob.getStatusEffect() == StatusEffect.Burn)
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * burnDamage));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * burnDamage));
                         else if (mob.getStatusEffect() == StatusEffect.Frostbite)
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5 * freezeDamage));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * freezeDamage));
                         else
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * 1.5));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5));
                         Debug.Log(mob.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
                     }
                     else if ((int)(mob.getType() + 2) % 3 == (int)skill.Value.type)
                     {
                         if (mob.getStatusEffect() == StatusEffect.Burn)
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * burnDamage));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * burnDamage));
                         else if (mob.getStatusEffect() == StatusEffect.Frostbite)
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5 * freezeDamage));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * freezeDamage));
                         else
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * 0.5));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5));
                         Debug.Log(mob.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
                     }
                     else
                     {
                         if (mob.getStatusEffect() == StatusEffect.Burn)
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * burnDamage));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * burnDamage));
                         else if (mob.getStatusEffect() == StatusEffect.Frostbite)
-                            mob.GetDamaged((int)((skill.Value.damage + damage) * freezeDamage));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * freezeDamage));
                         else
-                            mob.GetDamaged((int)((skill.Value.damage + damage)));
+                            mob.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage)));
                     }
                     if (skill.Value.statusEffect != StatusEffect.None)
                     {
@@ -268,8 +271,8 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             }
             else
             {
-                mob.GetDamaged((int)(damage));
-                Debug.Log(mob.name + " is attacked and get " + (int)(damage) + " damages");
+                mob.GetDamaged(damage);
+                Debug.Log(mob.name + " is attacked and get " + damage + " damages");
                 mob.mobDead();
             }
         }
@@ -309,7 +312,32 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             GameObject mob = InGameUIManager.Inst().GenerateMob(mobPrefab[mob_seed], i);
             mob.GetComponent<ObjectMob>().setmobSeed(mob_seed);
             mob.name = "monster" + i.ToString();
-            enemies[i] = mob.GetComponent<ObjectMob>();            
+            enemies[i] = mob.GetComponent<ObjectMob>();
+            enemies[i].setLevel(Random.Range(villageNum * 10, villageNum * 10 + 5));
+            int hp = 0, atk = 0, exp = 0;
+            switch (mob_seed)
+            {
+                case 0:
+                    hp = 1000;
+                    atk = 100;
+                    exp = 50;
+                    break;
+                case 1:
+                    hp = 1250;
+                    atk = 100;
+                    exp = 55;
+                    break;
+            }
+            for (int k = 0; k < enemies[i].getLevel(); ++k)
+            {
+                hp += (int)(enemies[i].getLevel() * 13 + enemies[i].getMaxHP() * 0.17 + 17);
+                atk += (int)(enemies[i].getLevel() * 2.77 + enemies[i].getAttack() * 0.1);
+                exp += (int)(enemies[i].getLevel() * 2.3);
+            }
+            enemies[i].setMaxHP(hp);
+            enemies[i].setHP(hp);
+            enemies[i].setAttack(atk);
+            enemies[i].setEXP(exp);
         }
 
         InGameUIManager.Inst().HPbarUpdate();

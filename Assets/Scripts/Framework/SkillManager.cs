@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public struct Skill
 {
     public string       Combination;
-    public int          damage;
+    public float          damage;
     public StateType    type;
     public bool         global;
     public StatusEffect statusEffect;
 	public bool         unlocked;
 
-    public Skill(string str, int dmg, StateType type, bool globalAttack, StatusEffect statusEffect, bool unlock = false)
+    public Skill(string str, float dmg, StateType type, bool globalAttack, StatusEffect statusEffect, bool unlock = false)
     {
         this.Combination  = str;
         this.damage       = dmg;
@@ -33,13 +33,13 @@ public class SkillManager : SingletonBehaviour<SkillManager> {
     void Start() {
         Inst();
 
-        addNewSkill(new Skill("CC"   , 50, StateType.Solid , false, StatusEffect.None     , true));
-        addNewSkill(new Skill("HH"   , 25, StateType.Gas   , false, StatusEffect.Burn     , true));
-        addNewSkill(new Skill("OO"   , 30, StateType.Gas   , false, StatusEffect.None     , true));
-        addNewSkill(new Skill("COO"  , 45, StateType.Solid , false, StatusEffect.Frostbite, true));
-        addNewSkill(new Skill("HHO"  , 20, StateType.Solid , true , StatusEffect.Frostbite, true));
-        addNewSkill(new Skill("HHOO" , 45, StateType.Liquid, false, StatusEffect.Corrosion, true));
-        addNewSkill(new Skill("COOHH", 75, StateType.Liquid, false, StatusEffect.Corrosion, true));
+        addNewSkill(new Skill("CC"   , 1.4f, StateType.Solid , false, StatusEffect.None     , true));
+        addNewSkill(new Skill("HH"   , 0.95f, StateType.Gas   , false, StatusEffect.Burn     , true));
+        addNewSkill(new Skill("OO"   , 1, StateType.Gas   , false, StatusEffect.None     , true));
+        addNewSkill(new Skill("COO"  , 1.35f, StateType.Solid , false, StatusEffect.Frostbite, true));
+        addNewSkill(new Skill("HHO"  , 0.75f, StateType.Solid , true , StatusEffect.Frostbite, true));
+        addNewSkill(new Skill("HHOO" , 1.35f, StateType.Liquid, false, StatusEffect.Corrosion, true));
+        addNewSkill(new Skill("COOHH", 1.5f, StateType.Liquid, false, StatusEffect.Corrosion, true));
     }
 
     private List<Skill> SkillList = new List<Skill>();

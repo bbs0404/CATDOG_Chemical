@@ -24,6 +24,19 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
     void Start()
     {
         //Load Data from Save
+        int hp = 500, atk = 300, def = 300, exp = 100;
+        for (int i = 0; i < player.getLevel(); ++i)
+        {
+            hp += (int)(player.getLevel() * 7 + player.getDefend() * 0.1);
+            atk += (int)(player.getAttack() * 0.1 + player.getLevel() * 15.7);
+            def += (int)(player.getLevel() * 13 + player.getDefend() * 0.07);
+            exp += (int)(player.getLevel() * 25.7 + 53);
+        }
+        player.setMaxHP(hp);
+        player.setHP(hp);
+        player.setAttack(atk);
+        player.setDefend(def);
+        player.setEXPtoLevelUP(exp);
     }
 
     public ObjectPlayer getPlayer()
