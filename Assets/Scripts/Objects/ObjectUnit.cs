@@ -8,6 +8,7 @@ public class ObjectUnit : MonoBehaviour {
     private int Level, Attack, Defend, EXP;
     private StatusEffect curState =StatusEffect.None;
     private int statusRemainTurn = 0;
+    private bool moveable = true;
 
     public int getHP()
     {
@@ -88,5 +89,13 @@ public class ObjectUnit : MonoBehaviour {
     public void setStatusRemainTurn(int turn)
     {
         statusRemainTurn = turn;
+    }
+    public bool isMoveable()
+    {
+        return moveable;
+    }
+    public void setMoveable(bool able)
+    {
+        moveable = able;
     }
 }

@@ -18,8 +18,10 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     private float maxCost;
     [SerializeField]
     private string Combination = "";
-    private int villageNum; //마을의 넘버
+    [SerializeField]
+    private int villageNum = 0; //마을의 넘버
     private int progress = 0; //진행한 미터
+    [SerializeField]
     private int distance = 5; //마을간의 거리
     private float waitSecond = 0;
     private int mob_number;
@@ -40,6 +42,8 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     void Start()
     {
+        distance = 5 + villageNum * 2;
+        progress = 0;
         if (GameStateManager.Inst().getState() == State.PAUSE)
             GameStateManager.Inst().setState(State.INGAME);
         InGameUIManager.Inst().progressUpdate(progress);
@@ -57,12 +61,13 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         else if (battleTimer <= 0)
         {
             battleTimer = 1;
-            if (progress >= 5) {
+            if (progress >= distance) {
                 GameStateManager.Inst().setState(State.END);
                 InGameUIManager.Inst().resultTextUpdate();
                 InGameUIManager.Inst().OnStateChanged(State.END);
             }
-            battleStart();
+            else
+                battleStart();
         }
         if (waitSecond > 0)
         {
@@ -157,7 +162,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             if (skill.Value.global) {
                 var mobs = FindObjectsOfType<ObjectMob>();
                 foreach ( var i in mobs ) {
-                    if (Random.Range(0, 10) <= 10 - (i.getLevel() - PlayerManager.Inst().getPlayer().getLevel()))
+                    if (Random.Range(0, 10) < mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel())
                     {
                         Debug.Log(i.name + "does not take any damage");
                         continue; //회피
@@ -207,7 +212,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                 }
             }
             else {
-                if (Random.Range(0, 10) <= 10 - (mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel()))
+                if (Random.Range(0, 10) < mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel())
                 {
                     Debug.Log(mob.name + "does not take any damage");
                 }
@@ -257,7 +262,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         }
         else
         {
-            if (Random.Range(0, 10) <= 10 - (mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel()))
+            if (Random.Range(0, 10) < mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel())
             {
                 Debug.Log(mob.name + "does not take any damage");
             }
@@ -269,6 +274,10 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             }
         }
         SoundManager.Inst().playAudio(attack_sfx);
+        while (PlayerManager.Inst().getPlayer().getEXP() >= PlayerManager.Inst().getPlayer().getEXPtoLevelUP())
+        {
+            PlayerManager.Inst().levelUp();
+        }
         AttackReady = false;
         checkBattleState();
         if (!InBattle)
@@ -367,16 +376,19 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                 {
                     enemies[i].GetDamaged((int)(enemies[i].getMaxHP() * 0.05f));
                 }
+                if (enemies[i].getStatusEffect() == StatusEffect.Frostbite)
+                {
+                        enemies[i].setMoveable(!enemies[i].isMoveable());
+                }
                 if (enemies[i].getStatusEffect() != StatusEffect.None)
                 {
                     enemies[i].setStatusRemainTurn(enemies[i].getStatusRemainTurn() - 1);
                     if (enemies[i].getStatusRemainTurn() <= 0)
+                    {
                         enemies[i].setStatusEffect(StatusEffect.None);
+                        enemies[i].setMoveable(true);
+                    }
                 }
-            }
-            while (PlayerManager.Inst().getPlayer().getEXP() >= PlayerManager.Inst().getPlayer().getEXPtoLevelUP())
-            {
-                PlayerManager.Inst().levelUp();
             }
             currentTurn = GameTurn.ENEMY;
             cost = ++maxCost;
