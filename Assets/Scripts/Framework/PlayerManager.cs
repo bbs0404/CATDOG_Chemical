@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerManager : SingletonBehaviour<PlayerManager> {
 
@@ -147,5 +148,6 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         player.setDefend(Mathf.RoundToInt((float)(def + player.getLevel() * 17 + def * 0.13)));
         player.setEXP(player.getEXP() - player.getEXPtoLevelUP());
         player.setEXPtoLevelUP(player.getEXPtoLevelUP() + (int)(player.getLevel() * 25.7) + 53);
+        player.getLVtext().text = "LV." + (player.getLevel() + 1).ToString();
     }
 }

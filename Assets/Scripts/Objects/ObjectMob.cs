@@ -8,6 +8,9 @@ public class ObjectMob : ObjectUnit
     private StateType curType;
     [SerializeField]
     private int mob_seed;
+    [SerializeField]
+    private StatusEffect status;
+
     void Start() {
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerDown;
@@ -64,5 +67,10 @@ public class ObjectMob : ObjectUnit
     public void setmobSeed(int seed)
     {
         mob_seed = seed;
+    }
+
+    public StatusEffect getStatus()
+    {
+        return status;
     }
 }

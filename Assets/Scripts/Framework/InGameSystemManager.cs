@@ -40,9 +40,11 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     private List<GameObject> mobPrefab;
     private ObjectMob[] enemies;
 
+    [SerializeField]
+    private Sprite[] StatusSprites = new Sprite[3];
     void Start()
     {
-        distance = 5 + villageNum * 2;
+        distance = 5 + villageNum * 3;
         progress = 0;
         if (GameStateManager.Inst().getState() == State.PAUSE)
             GameStateManager.Inst().setState(State.INGAME);
@@ -125,6 +127,11 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     public int getDistance()
     {
         return distance;
+    }
+
+    public Sprite[] getStatusSprites()
+    {
+        return StatusSprites;
     }
 
     public void useCost(float usage)
@@ -313,7 +320,8 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             mob.GetComponent<ObjectMob>().setmobSeed(mob_seed);
             mob.name = "monster" + i.ToString();
             enemies[i] = mob.GetComponent<ObjectMob>();
-            enemies[i].setLevel(Random.Range(villageNum * 10, villageNum * 10 + 5));
+            enemies[i].setLevel(Random.Range(villageNum * 10, villageNum * 10 + 10));
+            enemies[i].getLVtext().text = "LV." + (enemies[i].getLevel()+1).ToString();
             int hp = 0, atk = 0, exp = 0;
             switch (mob_seed)
             {
@@ -371,18 +379,39 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     public void playerTurn()
     {
+        if (!PlayerManager.Inst().getPlayer().isMoveable())
+        {
+            turnOver();
+            return;
+        }
         if (Combination.CompareTo("") != 0)
             AttackReady = true;
     }
 
     public void enemyTurn()
     {
-        for (int i = 0; i < enemies.Length; ++i) {
+        for (int i = 0; i < enemies.Length; ++i)
+        {
+            if (!enemies[i].isMoveable())
+                continue;
             if (enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend() > 0)
+            {
                 PlayerManager.Inst().getPlayer().GetDamaged(enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend());
+                Debug.Log("Player get damaged");
+            }
             else
+            {
                 PlayerManager.Inst().getPlayer().GetDamaged(10);
-            waitSecond = 1.0f;
+                Debug.Log("Player get damaged");
+            }
+            if (enemies[i].getStatus() != StatusEffect.None)
+            {
+                if (Random.Range(0, 20) < 1)
+                {
+                    PlayerManager.Inst().getPlayer().setStatusEffect(enemies[i].getStatus());
+                    PlayerManager.Inst().getPlayer().setStatusRemainTurn(Random.Range(4, 8));
+                }
+            }
         }
         Combination = "";
         InGameUIManager.Inst().combinationTextUpdate();
@@ -406,7 +435,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                 }
                 if (enemies[i].getStatusEffect() == StatusEffect.Frostbite)
                 {
-                        enemies[i].setMoveable(!enemies[i].isMoveable());
+                    enemies[i].setMoveable(!enemies[i].isMoveable());
                 }
                 if (enemies[i].getStatusEffect() != StatusEffect.None)
                 {
@@ -425,7 +454,22 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             InGameUIManager.Inst().costTextUpdate();
         }
         else
+        {
+            if (PlayerManager.Inst().getPlayer().getStatusEffect() == StatusEffect.Frostbite)
+            {
+                PlayerManager.Inst().getPlayer().setMoveable(!PlayerManager.Inst().getPlayer().isMoveable());
+            }
+            if (PlayerManager.Inst().getPlayer().getStatusEffect() != StatusEffect.None)
+            {
+                PlayerManager.Inst().getPlayer().setStatusRemainTurn(PlayerManager.Inst().getPlayer().getStatusRemainTurn() - 1);
+                if (PlayerManager.Inst().getPlayer().getStatusRemainTurn() <= 0)
+                {
+                    PlayerManager.Inst().getPlayer().setStatusEffect(StatusEffect.None);
+                    PlayerManager.Inst().getPlayer().setMoveable(true);
+                }
+            }
             currentTurn = GameTurn.PLAYER;
+        }
         InGameUIManager.Inst().HPbarUpdate();
     }
 

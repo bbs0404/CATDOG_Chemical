@@ -1,14 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ObjectUnit : MonoBehaviour {
     [SerializeField]
     private int MaxHP, CurrentHP;
     [SerializeField]
     private int Level, Attack, Defend, EXP;
+    [SerializeField]
     private StatusEffect curState =StatusEffect.None;
     private int statusRemainTurn = 0;
     private bool moveable = true;
+    [SerializeField]
+    private Text LVtext;
+    void Start()
+    {
+        LVtext.text = "LV." + (Level + 1).ToString();
+    }
 
     public int getHP()
     {
@@ -97,5 +105,9 @@ public class ObjectUnit : MonoBehaviour {
     public void setMoveable(bool able)
     {
         moveable = able;
+    }
+    public Text getLVtext()
+    {
+        return LVtext;
     }
 }

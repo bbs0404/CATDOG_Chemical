@@ -192,6 +192,7 @@ public class InGameUIManager : SingletonBehaviour<InGameUIManager> {
         mob.transform.localPosition = mobPosition[number];
 
         GameObject hpbar = Instantiate(HPbarPrefab);
+        hpbar.name = "HPbar";
         hpbar.transform.SetParent(mob.transform, false);
         hpbar.transform.localPosition = new Vector2(0, mob.GetComponent<RectTransform>().rect.height);
 
