@@ -8,11 +8,9 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
     [SerializeField]
     private ObjectPlayer player;
 
-    public int playerLevel = 0;
-    public int playerEXP = 0;
-
-    public bool[] Raw = new bool[4] { true, false, false, false };
-    public bool[] Element = new bool[20] { true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+    public static int playerLevel = 0;
+    public static int playerEXP = 0;
+    public static int villageProgress = 0; //최대 마을거리
 
     void Start()
     {
@@ -20,10 +18,10 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         int hp = 500, atk = 300, def = 300, exp = 100;
         for (int i = 0; i < playerLevel; ++i)
         {
-            hp += (int)(player.getLevel() * 7 + player.getDefend() * 0.1);
-            atk += (int)(player.getAttack() * 0.1 + player.getLevel() * 15.7);
-            def += (int)(player.getLevel() * 13 + player.getDefend() * 0.07);
-            exp += (int)(player.getLevel() * 25.7 + 53);
+            hp += (int)(i * 7 + player.getDefend() * 0.1);
+            atk += (int)(player.getAttack() * 0.1 + i * 15.7);
+            def += (int)(i * 13 + player.getDefend() * 0.07);
+            exp += (int)(i * 25.7 + 53);
         }
         player.setMaxHP(hp);
         player.setHP(hp);

@@ -37,6 +37,11 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
                     SceneManager.LoadScene("Title");
                     break;
                 }
+            case "VillageButton":
+                {
+                    SceneManager.LoadScene("Village");
+                    break;
+                }
             case "CButton":
             case "SButton":
             case "HButton":
