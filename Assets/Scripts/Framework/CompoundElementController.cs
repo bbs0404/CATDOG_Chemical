@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CompoundElementController : MonoBehaviour {
 
 	// 1 is Hydrogen.
-	[SerializeField]
 	private int ElementNumber;
 
 	[SerializeField]
@@ -24,9 +24,12 @@ public class CompoundElementController : MonoBehaviour {
 	private Text ElectronNumberLabel;
 	[SerializeField]
 	private Text Status;
-
+    [SerializeField]
+    private Sprite[] sprites = new Sprite[20];
 	private InventoryManager inventoryManager;
 
+    [SerializeField]
+    private Canvas periodicCanvas;
 	/* *
 	 * Utility Functions BEGIN
 	 * */
@@ -146,7 +149,7 @@ public class CompoundElementController : MonoBehaviour {
 		    inventoryManager.getProton () >= requireProtonNum &&
 		    inventoryManager.getNeutron () >= requireNeutronNum &&
 		    inventoryManager.getElectron () >= requireElectronNum &&
-			!(PlayerManager.Inst ().Element [this.ElementNumber - 1])
+			!(InventoryManager.Inst ().Element [this.ElementNumber - 1])
 		);
 	}
 
@@ -202,7 +205,7 @@ public class CompoundElementController : MonoBehaviour {
 			msg = string.Format("조합 성공! - {0}", msg);
 
 			// Unlock
-			PlayerManager.Inst ().Element [this.ElementNumber - 1] = true;
+			InventoryManager.Inst ().Element [this.ElementNumber - 1] = true;
 		} else {
 			// Fail
 			msg = string.Format("조합 실패! - {0}", msg);
@@ -216,13 +219,29 @@ public class CompoundElementController : MonoBehaviour {
 
 		// Change Element Image
 		Texture2D texture = Resources.Load (string.Format ("ElementImages/{0}", ElementNumber)) as Texture2D;
-		ElementImage.sprite = Sprite.Create(texture, new Rect(0, 0, 320, 180), new Vector2(0.5f, 0.5f));
+        //ElementImage.sprite = Sprite.Create(texture, new Rect(0, 0, 320, 180), new Vector2(0.5f, 0.5f));
+        ElementImage.sprite = sprites[ElementNumber - 1];
 		Color c = ElementImage.color;
 		c.a = 1.0f;
 		ElementImage.color = c;
 
 		UpdateLabels ();
 	}
+
+    public void OnBackButtonClicked()
+    {
+        periodicCanvas.gameObject.SetActive(false);
+    }
+
+    public void OnSelectButtonClicked()
+    {
+        periodicCanvas.gameObject.SetActive(true);
+    }
+
+    public void OnExitButtonClicked()
+    {
+        SceneManager.LoadScene("Village");
+    }
 
 	// Use this for initialization
 	void Start () {

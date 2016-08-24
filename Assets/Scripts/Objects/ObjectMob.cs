@@ -33,7 +33,7 @@ public class ObjectMob : ObjectUnit
         if (this.getHP() <= 0)
         {
             PlayerManager.Inst().getPlayer().setEXP(PlayerManager.Inst().getPlayer().getEXP() + this.getEXP());
-            PlayerManager.Inst().playerEXP = PlayerManager.Inst().getPlayer().getEXP();
+            PlayerManager.playerEXP = PlayerManager.Inst().getPlayer().getEXP();
             InGameSystemManager.Inst().setMobNum(InGameSystemManager.Inst().getMobNum() - 1);
             switch (mob_seed)
             {
