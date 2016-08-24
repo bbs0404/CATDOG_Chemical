@@ -62,14 +62,21 @@ public static class SaveHelper
 {
     // class의 경우 ref를 붙이지 않아도 됩니다.
     public static void Save<T>(T data, string path) where T: class {
-        Save(data, path);
+        Save(ref data, path);
     }
 
     // struct의 경우 쓸데없는 복사를 막기 위해 ref를 붙여줘야 합니다. 
     public static void Save<T>(ref T data, string path) {
-        try {
+        try
+        {
+            FileInfo finfo = new FileInfo(Application.persistentDataPath + path);
+            if (!finfo.Directory.Exists)
+            {
+                Debug.Log("Create new directory: " + finfo.Directory.FullName);
+                Directory.CreateDirectory(finfo.Directory.FullName);
+            }
+            var fstream = File.Open(Application.persistentDataPath + path, FileMode.Create);
             var bf = new BinaryFormatter();
-            var fstream = File.Create(Application.persistentDataPath + path);
             bf.Serialize(fstream, data);
             fstream.Close();
         }

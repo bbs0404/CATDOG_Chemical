@@ -16,7 +16,9 @@ class CollectedElements
 
 }
 
+[System.Serializable]
 public class InventoryManager : SingletonBehaviour<InventoryManager>{
+    [SerializeField]
     private int proton = 0, neutron = 0, electron = 0;
 
     public int getProton()

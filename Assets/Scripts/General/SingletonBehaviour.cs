@@ -46,4 +46,9 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
             tmp = tmp.transform.parent;
         } while (tmp != null);
     }
+
+    public static void setInst(T inst)
+    {
+        s_Inst = inst;
+    }
 }

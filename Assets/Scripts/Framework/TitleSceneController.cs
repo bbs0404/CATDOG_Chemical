@@ -32,6 +32,12 @@ public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
                 //InGameSystemManager.villageNum = 0;
                 break;
             case "LoadGameButton":
+                //InGameSystemManager ingamesystem =  SaveHelper.Load<InGameSystemManager>("/gamedata");
+                //PlayerManager playermanager = SaveHelper.Load<PlayerManager>("/gamedata");
+                //InventoryManager inventorymanager = SaveHelper.Load<InventoryManager>("/gamedata");
+                //InGameSystemManager.setInst(ingamesystem);
+                //PlayerManager.setInst(playermanager);
+                //InventoryManager.setInst(inventorymanager);
                 SceneManager.LoadScene(1);
                 break;
             case "OptionButton":

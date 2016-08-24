@@ -9,6 +9,7 @@ enum GameTurn
     ENEMY
 }
 
+[System.Serializable]
 public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 {
     private const float burnDamage = 1.25f;

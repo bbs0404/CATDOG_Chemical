@@ -31,6 +31,9 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
                 }
             case "MainMenuButton":
                 {
+                    //SaveHelper.Save(InGameSystemManager.Inst(), "/gamedata");
+                    //SaveHelper.Save(PlayerManager.Inst(), "/gamedata");
+                    //SaveHelper.Save(InventoryManager.Inst(), "/gamedata");
                     SceneManager.LoadScene("Title");
                     break;
                 }
