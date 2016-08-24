@@ -4,8 +4,10 @@ using UnityEngine.UI;
 
 public class SkillBookController : MonoBehaviour {
 	public static int SKILL_PER_PAGE = 8;
+    public Sprite[] prefabs;
+    public Color color = new Color(1F, 1F, 1F, 1F);
 
-	[SerializeField]
+    [SerializeField]
 	private GameObject skillCellPrefab;
 	private int page, sortKey;
 
@@ -85,11 +87,15 @@ public class SkillBookController : MonoBehaviour {
 			Destroy (child.gameObject);
 		}
 
-		// Write page
-		foreach (var skill in skillList.GetRange (offset, count)) {
+
+        // Write page
+        foreach (var skill in skillList.GetRange (offset, count)) {
+
 			var cell = Instantiate (skillCellPrefab) as GameObject;
 
-			var text = cell.transform.FindChild ("Combination Text").GetComponent<Text>();
+            cell.GetComponent<Image>().color = color;
+            cell.GetComponent<Image>().sprite = prefabs[skill.imageNumber];
+            var text = cell.transform.FindChild ("Combination Text").GetComponent<Text>();
 			text.text = skill.Combination;
 
 			var hideImage = cell.transform.FindChild ("Hide Image").GetComponent<Image>();
@@ -99,6 +105,7 @@ public class SkillBookController : MonoBehaviour {
 
 			cell.transform.SetParent (skillPage.transform, false);
 		}
+       
 
 		// Update label
 		var last_page = (skillList.Count - 1) / SKILL_PER_PAGE + 1;
