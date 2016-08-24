@@ -89,8 +89,8 @@ public class SkillBookController : MonoBehaviour {
 		foreach (var skill in skillList.GetRange (offset, count)) {
 			var cell = Instantiate (skillCellPrefab) as GameObject;
 
-			var text = cell.transform.FindChild ("Combination Text").GetComponent<Text>();
-			text.text = skill.Combination;
+//			var text = cell.transform.FindChild ("Combination Text").GetComponent<Text>();
+//			text.text = skill.Combination;
 
 			var hideImage = cell.transform.FindChild ("Hide Image").GetComponent<Image>();
 			if (!skill.unlocked) {
@@ -98,6 +98,7 @@ public class SkillBookController : MonoBehaviour {
 			}
 
 			cell.transform.SetParent (skillPage.transform, false);
+            cell.GetComponent<Image>().sprite = skill.sprite;
 		}
 
 		// Update label

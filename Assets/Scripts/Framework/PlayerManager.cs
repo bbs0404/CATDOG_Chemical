@@ -18,7 +18,9 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
     private ObjectArmor shoes = null;
     [SerializeField]
     private ObjectArmor weapon = null;
-    
+    public int playerLevel = 0;
+    public int playerEXP = 0;
+
     public bool[] Raw = new bool[4] { true, false, false, false };
     public bool[] Element = new bool[20] { true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 
@@ -26,7 +28,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
     {
         //Load Data from Save
         int hp = 500, atk = 300, def = 300, exp = 100;
-        for (int i = 0; i < player.getLevel(); ++i)
+        for (int i = 0; i < playerLevel; ++i)
         {
             hp += (int)(player.getLevel() * 7 + player.getDefend() * 0.1);
             atk += (int)(player.getAttack() * 0.1 + player.getLevel() * 15.7);
@@ -38,6 +40,8 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         player.setAttack(atk);
         player.setDefend(def);
         player.setEXPtoLevelUP(exp);
+        player.setLevel(playerLevel);
+        player.setEXP(playerEXP);
     }
 
     public ObjectPlayer getPlayer()
@@ -149,5 +153,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         player.setEXP(player.getEXP() - player.getEXPtoLevelUP());
         player.setEXPtoLevelUP(player.getEXPtoLevelUP() + (int)(player.getLevel() * 25.7) + 53);
         player.getLVtext().text = "LV." + (player.getLevel() + 1).ToString();
+        playerLevel = player.getLevel();
+        playerEXP = player.getEXP();
     }
 }

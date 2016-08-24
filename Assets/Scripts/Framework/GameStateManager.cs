@@ -5,7 +5,8 @@ public enum State
 {
     INGAME,
     PAUSE,
-    END
+    END,
+    SKILLINFO
 }
 
 public class GameStateManager : SingletonBehaviour<GameStateManager> {

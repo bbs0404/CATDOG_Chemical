@@ -50,14 +50,21 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
                     switch (button.name[0])
                     {
                         case 'C':
-                        case 'H':
-                        case 'O':
-                            if (InGameSystemManager.Inst().getCost() < 0.5)
+                            if (InGameSystemManager.Inst().getCost() < 2)
                             {
                                 Debug.Log("Not enough cost");
                                 return;
                             }
-                            InGameSystemManager.Inst().useCost(0.5f);
+                            InGameSystemManager.Inst().useCost(2f);
+                            break;
+                        case 'H':
+                        case 'O':
+                            if (InGameSystemManager.Inst().getCost() < 1)
+                            {
+                                Debug.Log("Not enough cost");
+                                return;
+                            }
+                            InGameSystemManager.Inst().useCost(1f);
                             break;
                         case 'S':
                         case 'P':
@@ -77,7 +84,8 @@ public class InGameSceneController : SingletonBehaviour<InGameSceneController> {
                 }
             case "SkillBookButton":
                 {
-
+                    stateM.setState(State.SKILLINFO);
+                    gameUI.OnStateChanged(State.SKILLINFO);
                     break;
                 }
         }

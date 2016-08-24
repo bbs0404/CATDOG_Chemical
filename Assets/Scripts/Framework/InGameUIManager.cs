@@ -7,6 +7,8 @@ public class InGameUIManager : SingletonBehaviour<InGameUIManager> {
     public Canvas InGameCanvas = null;
     public Canvas MenuCanvas = null;
     public Canvas ResultCanvas = null;
+    public Canvas SkillBookCanvas = null;
+
     [SerializeField]
     private Image[] combinationUI = new Image[6];
     [SerializeField]
@@ -53,12 +55,14 @@ public class InGameUIManager : SingletonBehaviour<InGameUIManager> {
         Button[] buttons = InGameCanvas.GetComponentsInChildren<Button>();
         if (state == State.INGAME)
         {
+            InGameCanvas.gameObject.SetActive(true);
             for (int i = 0; i < buttons.Length; ++i)
             {
                 buttons[i].interactable = true;
             }
             MenuCanvas.gameObject.SetActive(false);
             ResultCanvas.gameObject.SetActive(false);
+            SkillBookCanvas.gameObject.SetActive(false);
         }
         else if (state == State.PAUSE)
         {
@@ -68,6 +72,7 @@ public class InGameUIManager : SingletonBehaviour<InGameUIManager> {
             }
             MenuCanvas.gameObject.SetActive(true);
             ResultCanvas.gameObject.SetActive(false);
+            SkillBookCanvas.gameObject.SetActive(false);
         }
         else if (state == State.END) 
         {
@@ -77,6 +82,18 @@ public class InGameUIManager : SingletonBehaviour<InGameUIManager> {
             }
             MenuCanvas.gameObject.SetActive(false);
             ResultCanvas.gameObject.SetActive(true);
+            SkillBookCanvas.gameObject.SetActive(false);
+        }
+        else if (state == State.SKILLINFO)
+        {
+            for (int i = 0; i < buttons.Length; ++i)
+            {
+                buttons[i].interactable = false;
+            }
+            MenuCanvas.gameObject.SetActive(false);
+            ResultCanvas.gameObject.SetActive(false);
+            SkillBookCanvas.gameObject.SetActive(true);
+            InGameCanvas.gameObject.SetActive(false);
         }
     }
 

@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 89e1de6987a287f4fb9e77ce72f1d1c7
-timeCreated: 1472039121
+guid: b5b2b8f50a00bb4498560c6896c331a9
+timeCreated: 1472046587
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: "\uC2A4\uD0AC\uCC3D_0"
-    21300002: T_skillPanel_0
-    21300004: T_skillPanel_1
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -33,7 +30,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -41,7 +38,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -54,33 +51,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: T_skillPanel_0
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 183
-        width: 945
-        height: 118
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: T_skillPanel_1
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 58
-        width: 945
-        height: 118
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 

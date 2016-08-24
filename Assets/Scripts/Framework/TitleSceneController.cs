@@ -27,6 +27,14 @@ public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
         {
             case "StartGameButton":
                 SceneManager.LoadScene(1);
+                //PlayerManager.playerEXP = 0;
+                //PlayerManager.playerLevel = 0;
+                //InGameSystemManager.villageNum = 0;
+                break;
+            case "LoadGameButton":
+                SceneManager.LoadScene(1);
+                break;
+            case "OptionButton":
                 break;
         }
     }
