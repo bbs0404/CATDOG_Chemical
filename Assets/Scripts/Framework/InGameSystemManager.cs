@@ -20,7 +20,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     [SerializeField]
     private string Combination = "";
     [SerializeField]
-    private int villageNum = 0; //마을의 넘버
+    public static int villageNum = 0; //현재 플레이어가 있는 마을의 넘버
     private int progress = 0; //진행한 미터
     [SerializeField]
     private int distance = 5; //마을간의 거리
