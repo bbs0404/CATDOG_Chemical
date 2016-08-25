@@ -90,6 +90,8 @@ public static class SaveHelper
     // class의 경우 placeHolder를 지정하지 않으면 파일이 없을 때 null을 반환합니다.
     public static T Load<T>(string path) where T: class {
         try {
+            if (!File.Exists(Application.persistentDataPath + path)) 
+                throw new FileNotFoundException("not exists", Application.persistentDataPath + path);
             var bf = new BinaryFormatter();
             var fstream = File.Open(Application.persistentDataPath + path, FileMode.Open);
             var ret = bf.Deserialize(fstream) as T;
@@ -105,6 +107,8 @@ public static class SaveHelper
     // struct의 경우 변수에 null을 저장할 수 없기 때문에 placeHolder가 필요합니다.
     public static T Load<T>(string path, T placeHolder) {
         try {
+            if (!File.Exists(Application.persistentDataPath + path))
+                throw new FileNotFoundException("not exists", Application.persistentDataPath + path);
             var bf = new BinaryFormatter();
             var fstream = File.Open(Application.persistentDataPath + path, FileMode.Open);
             var ret = (T)bf.Deserialize(fstream);

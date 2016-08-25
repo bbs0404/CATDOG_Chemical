@@ -3,15 +3,42 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
 public class PlayerManager : SingletonBehaviour<PlayerManager> {
 
     [SerializeField]
     private ObjectPlayer player;
-    [SerializeField]
-    public static int playerLevel = 0;
-    public static int playerEXP = 0;
-    public static int villageProgress = 0; //플레이어의 최대 마을거리
+
+    private static int _playerLevel = 0;
+    private static int _playerEXP = 0;
+    private static int _villageProgress = 0; //플레이어의 최대 마을거리
+
+    public static int playerLevel {
+        get { return _playerLevel; }
+        set {
+            if (_playerLevel != value) {
+                _playerLevel = value;
+                Save();
+            }
+        }
+    }
+    public static int playerEXP {
+        get { return _playerEXP; }
+        set {
+            if (_playerEXP != value) {
+                _playerEXP = value;
+                Save();
+            }
+        }
+    }
+    public static int villageProgress {
+        get { return _villageProgress; }
+        set {
+            if (_villageProgress != value) {
+                _villageProgress = value;
+                Save();
+            }
+        }
+    }
 
     void Update()
     {
@@ -20,6 +47,11 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
             player = GameObject.FindObjectOfType<ObjectPlayer>();
             PlayerStatUpdate();
         }
+    }
+
+    void Awake() 
+    {
+        Load();
     }
 
     void Start()
@@ -72,4 +104,32 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         playerLevel = player.getLevel();
         playerEXP = player.getEXP();
     }
+
+    static void Save() {
+        Debug.Log("PlayerManager.Save called");
+        var data = new PlayerManagerData();
+        data.playerLevel = playerLevel;
+        data.playerExp = playerEXP;
+        data.villageProgress = villageProgress;
+        SaveHelper.Save(data, "/player_manager_data");
+    }
+
+    static void Load() {
+        Debug.Log("PlayerManager.Load called");
+        var data = SaveHelper.Load<PlayerManagerData>("/player_manager_data");
+        if (data != null) {
+            playerLevel = data.playerLevel;
+            playerEXP = data.playerExp;
+            villageProgress = data.villageProgress;
+        }
+    }
+}
+
+
+[System.Serializable]
+class PlayerManagerData
+{
+    public int playerLevel;
+    public int playerExp;
+    public int villageProgress;
 }
