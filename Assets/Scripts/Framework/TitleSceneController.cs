@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
 
+    void Awake() {
+        PlayerManager.Load();
+        InventoryManager.Load1();
+        InventoryManager.Load2();
+    }
+
     public void onButtonClicked(Button button)
     {
         switch (button.gameObject.name)

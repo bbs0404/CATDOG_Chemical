@@ -114,7 +114,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
         SaveHelper.Save(data, "/player_manager_data");
     }
 
-    static void Load() {
+    public static void Load() {
         Debug.Log("PlayerManager.Load called");
         var data = SaveHelper.Load<PlayerManagerData>("/player_manager_data");
         if (data != null) {

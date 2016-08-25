@@ -89,7 +89,7 @@ public class InventoryManager : SingletonBehaviour<InventoryManager>{
         SaveHelper.Save(data, "/inventory_manager_data_1");
     }
 
-    static void Load1() {
+    public static void Load1() {
         Debug.Log("InventoryManager.Load1 called");
         var data = SaveHelper.Load<InventoryManagerData1>("/inventory_manager_data_1");
         if (data != null) {
@@ -107,7 +107,7 @@ public class InventoryManager : SingletonBehaviour<InventoryManager>{
         SaveHelper.Save(data, "/inventory_manager_data_2");
     }
 
-    static void Load2() {
+    public static void Load2() {
         Debug.Log("InventoryManager.Load2 called");
         var data = SaveHelper.Load<InventoryManagerData2>("/inventory_manager_data_2");
         if (data != null) {
