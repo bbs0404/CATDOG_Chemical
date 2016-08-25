@@ -30,6 +30,9 @@ public class CompoundElementController : MonoBehaviour {
 
     [SerializeField]
     private Canvas periodicCanvas;
+
+    [SerializeField]
+    private ElementTable _elementTable;
 	/* *
 	 * Utility Functions BEGIN
 	 * */
@@ -239,6 +242,7 @@ public class CompoundElementController : MonoBehaviour {
     {
         periodicCanvas.gameObject.SetActive(true);
         ExitButton.enabled = false;
+        _elementTable.ElementTableUpdate();
     }
 
     public void OnExitButtonClicked()

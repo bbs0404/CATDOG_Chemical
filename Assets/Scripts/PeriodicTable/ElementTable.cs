@@ -5,45 +5,48 @@ using UnityEngine.UI;
 
 public class ElementTable : SingletonBehaviour<ElementTable> {
     public GameObject[] ElementsObect = new GameObject[20];
+    private Button[] ElementsButton = new Button[20];
 
     void Start()
     {
+        for (int i = 0; i < 20; ++i)
+            ElementsButton[i] = ElementsObect[i].GetComponent<Button>();
         ElementTableUpdate();
     }
     public void ElementTableUpdate()
     {
         if (SceneManager.GetActiveScene().name == "CompoundElement")
         {
+            for (int i = 0; i < 20; ++i)
+                ElementsButton[i].interactable = false;
+            ElementsButton[0].interactable = true;
+            ElementsButton[1].interactable = true;
             if (PlayerManager.villageProgress > 0)
             {
-                for (int i = 2; i < 10; ++i)
+                if (InventoryManager.Element[0])
+                    ElementsButton[2].interactable = true;
+                if (InventoryManager.Element[1])
+                    ElementsButton[9].interactable = true;
+                for (int i = 3; i < 9; ++i)
                 {
-                    if (!InventoryManager.Element[i])
-                        ElementsObect[i].SetActive(true);
-                    if (i == 2 && !InventoryManager.Element[0] || i == 9 && !InventoryManager.Element[1])
-                        ElementsObect[i].SetActive(false);
+                    ElementsButton[i].interactable = true;
                 }
             }
             if (PlayerManager.villageProgress > 1)
             {
                 for (int i = 10; i < 18; ++i)
                 {
-                    if (!InventoryManager.Element[i] && InventoryManager.Element[i - 8])
-                        ElementsObect[i].SetActive(true);
+                    if (InventoryManager.Element[i - 8])
+                        ElementsButton[i].interactable = true;
                 }
             }
             if (PlayerManager.villageProgress > 2)
             {
                 for (int i = 18; i < 20; ++i)
                 {
-                    if (!InventoryManager.Element[i] && InventoryManager.Element[i - 8])
-                        ElementsObect[i].SetActive(true);
+                    if (InventoryManager.Element[i - 8])
+                        ElementsButton[i].interactable = true;
                 }
-            }
-            for (int i = 0; i < 20; ++i)
-            {
-                if (InventoryManager.Element[i])
-                    ElementsObect[i].GetComponent<Button>().enabled = false;
             }
         }
         else

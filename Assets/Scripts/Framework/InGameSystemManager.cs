@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -84,6 +85,9 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                 if (villageNum == PlayerManager.villageProgress)
                 {
                     villageNum = ++PlayerManager.villageProgress;
+                    if (villageNum == 3) {
+                        SceneManager.LoadScene("Ending");
+                    }
                 }
                 GameStateManager.Inst().setState(State.END);
                 InGameUIManager.Inst().resultTextUpdate();
