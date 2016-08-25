@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: f5ab34061da2de94f8bc0ad0f88477eb
-timeCreated: 1472121233
+guid: c5f8be3261091424e8f264fff9a33d13
+timeCreated: 1472121643
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: "\uC591\uC131\uC790_0"
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,7 +52,20 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\uC591\uC131\uC790_0"
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 41
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

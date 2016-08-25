@@ -40,12 +40,12 @@ public class ObjectMob : ObjectUnit
                 case 0:
                     InventoryManager.Inst().setProton(InventoryManager.Inst().getProton() + Random.Range(6, 11));
                     InventoryManager.Inst().setNeutron(InventoryManager.Inst().getNeutron() + Random.Range(2, 7));
-                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(4, 9));
+                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(4, 9) * getLevel());
                     break;
                 case 1:
                     InventoryManager.Inst().setProton(InventoryManager.Inst().getProton() + Random.Range(2, 7));
                     InventoryManager.Inst().setNeutron(InventoryManager.Inst().getNeutron() + Random.Range(4, 9));
-                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(6, 11));
+                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(6, 11) * getLevel());
                     break;
             }
             Destroy(this.gameObject);

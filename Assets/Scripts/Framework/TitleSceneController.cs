@@ -10,9 +10,16 @@ public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
         switch (button.gameObject.name)
         {
             case "StartGameButton":
+                PlayerManager.playerLevel = 0;
+                PlayerManager.playerEXP = 0;
+                InventoryManager.proton = 0;
+                InventoryManager.neutron = 0;
+                InventoryManager.electron = 0;
+                PlayerManager.villageProgress = 0;
+                InGameSystemManager.villageNum = 0;
+                InventoryManager.Element = new bool[20] { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+                InventoryManager.Raw = new bool[4] { true, false, false, false };
                 SceneManager.LoadScene(1);
-                //PlayerManager.playerEXP = 0;
-                //PlayerManager.playerLevel = 0;
                 //InGameSystemManager.villageNum = 0;
                 break;
             case "LoadGameButton":
