@@ -12,6 +12,7 @@ public class MapSceneController : SingletonBehaviour<MapSceneController>{
     {
         tmpVillageNum = InGameSystemManager.villageNum;
         Village = true;
+        MapSceneUIManager.Inst().updateVillages();
     }
 
     public void OnVillageButtonClicked(int villageNum)

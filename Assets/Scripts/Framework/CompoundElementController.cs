@@ -149,7 +149,7 @@ public class CompoundElementController : MonoBehaviour {
 		    inventoryManager.getProton () >= requireProtonNum &&
 		    inventoryManager.getNeutron () >= requireNeutronNum &&
 		    inventoryManager.getElectron () >= requireElectronNum &&
-			!(InventoryManager.Inst ().Element [this.ElementNumber - 1])
+			!(InventoryManager.Element [this.ElementNumber - 1])
 		);
 	}
 
@@ -205,13 +205,14 @@ public class CompoundElementController : MonoBehaviour {
 			msg = string.Format("조합 성공! - {0}", msg);
 
 			// Unlock
-			InventoryManager.Inst ().Element [this.ElementNumber - 1] = true;
+			InventoryManager.Element [this.ElementNumber - 1] = true;
 		} else {
 			// Fail
 			msg = string.Format("조합 실패! - {0}", msg);
 		}
 		Status.text = msg;
 		UpdateLabels ();
+        ElementTable.Inst().ElementTableUpdate();
 	}
 
 	public void SetElementNumber(int ElementNumber) {
@@ -231,11 +232,13 @@ public class CompoundElementController : MonoBehaviour {
     public void OnBackButtonClicked()
     {
         periodicCanvas.gameObject.SetActive(false);
+        ExitButton.enabled = true;
     }
 
     public void OnSelectButtonClicked()
     {
         periodicCanvas.gameObject.SetActive(true);
+        ExitButton.enabled = false;
     }
 
     public void OnExitButtonClicked()

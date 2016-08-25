@@ -20,10 +20,6 @@ public class MapSceneUIManager : SingletonBehaviour<MapSceneUIManager> {
     private string[] Description = new string[8];
     [SerializeField]
     private Text NameText, DescriptionText;
-	// Use this for initialization
-	void Start () {
-        updateVillages();
-	}
 	
 	public void updateVillages()
     {

@@ -18,11 +18,10 @@ class CollectedElements
 
 [System.Serializable]
 public class InventoryManager : SingletonBehaviour<InventoryManager>{
-    [SerializeField]
-    private int proton = 0, neutron = 0, electron = 0;
+    public static int proton = 0, neutron = 0, electron = 0;
 
-    public bool[] Element = new bool[20] { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
-    public bool[] Raw = new bool[4] { true, false, false, false };
+    public static bool[] Element = new bool[20] { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+    public static bool[] Raw = new bool[4] { true, false, false, false };
 
     public int getProton()
     {

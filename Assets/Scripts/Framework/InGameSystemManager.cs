@@ -65,6 +65,10 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         {
             battleTimer = 1;
             if (progress >= distance) {
+                if (villageNum == PlayerManager.villageProgress)
+                {
+                    villageNum = ++PlayerManager.villageProgress;
+                }
                 GameStateManager.Inst().setState(State.END);
                 InGameUIManager.Inst().resultTextUpdate();
                 InGameUIManager.Inst().OnStateChanged(State.END);
