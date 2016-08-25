@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class ElementTable : MonoBehaviour {
@@ -35,4 +36,8 @@ public class ElementTable : MonoBehaviour {
     void Update () {
 	
 	}
+
+    public void ChangeScene(string sceneName) {
+        SceneManager.LoadScene(sceneName);
+    }
 }
