@@ -10,6 +10,10 @@ public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
         switch (button.gameObject.name)
         {
             case "StartGameButton":
+                SaveHelper.Delete("/player_manager_data");
+                SaveHelper.Delete("/inventory_manager_data_1");
+                SaveHelper.Delete("/inventory_manager_data_2");
+                SaveHelper.Delete("/ingame_system_manager_villagenum");
                 PlayerManager.playerLevel = 0;
                 PlayerManager.playerEXP = 0;
                 InventoryManager.proton = 0;
@@ -17,8 +21,8 @@ public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
                 InventoryManager.electron = 0;
                 PlayerManager.villageProgress = 0;
                 InGameSystemManager.villageNum = 0;
-                InventoryManager.Element = new bool[20] { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
-                InventoryManager.Raw = new bool[4] { true, false, false, false };
+                InventoryManager.Element.data = new bool[20] { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+                InventoryManager.Raw.data = new bool[4] { true, false, false, false };
                 SceneManager.LoadScene(1);
                 //InGameSystemManager.villageNum = 0;
                 break;

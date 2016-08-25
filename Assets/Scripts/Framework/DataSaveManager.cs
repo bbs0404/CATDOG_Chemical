@@ -120,4 +120,12 @@ public static class SaveHelper
         }
         return placeHolder;
     }
+
+    public static bool Delete(string path) {
+        if (File.Exists(Application.persistentDataPath + path)) {
+            File.Delete(Application.persistentDataPath + path);
+            return true;
+        }
+        return false;
+    }
 }

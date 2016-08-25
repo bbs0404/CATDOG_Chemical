@@ -20,7 +20,16 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     [SerializeField]
     private string Combination = "";
     [SerializeField]
-    public static int villageNum = 0; //현재 플레이어가 있는 마을의 넘버
+    private static int _villageNum = 0; //현재 플레이어가 있는 마을의 넘버
+    public static int villageNum {
+        get { return _villageNum; }
+        set {
+            if (_villageNum != value) {
+                _villageNum = value;
+                SaveHelper.Save(ref _villageNum, "/ingame_system_manager_villagenum");
+            }
+        }
+    }
     private int progress = 0; //진행한 미터
     [SerializeField]
     private int distance = 5; //마을간의 거리
@@ -45,6 +54,11 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     [SerializeField]
     private Sprite[] StatusSprites = new Sprite[3];
+
+    void Awake() {
+        villageNum = SaveHelper.Load("/ingame_system_manager_villagenum", 0);
+    }
+
     void Start()
     {
         distance = 5 + villageNum * 3;
