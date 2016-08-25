@@ -270,7 +270,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                     }
                     if (skill.Value.statusEffect != StatusEffect.None)
                     {
-                        if (Random.Range(0, 10) < 10)
+                        if (Random.Range(0, 10) < 1)
                         {
                             mob.setStatusEffect(skill.Value.statusEffect);
                             mob.setStatusRemainTurn(Random.Range(4, 8));
