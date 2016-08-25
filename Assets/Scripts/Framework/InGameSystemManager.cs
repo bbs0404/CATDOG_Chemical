@@ -322,8 +322,6 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         maxCost = cost = 1;
 
         InGameUIManager.Inst().costTextUpdate();
-        for (int i = 0; i < enemies.Length; ++i)
-            Destroy(enemies[i].gameObject);
         enemies = new ObjectMob[mob_number];
         for (int i = 0; i < mob_number; ++i)
         {
@@ -372,6 +370,8 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         InGameUIManager.Inst().progressUpdate(progress, battleTimer);
         InGameUIManager.Inst().combinationTextUpdate();
         InGameUIManager.Inst().HPbarUpdate();
+        for (int i = 0; i < enemies.Length; ++i)
+            Destroy(enemies[i].gameObject);
     }
 
     public void checkBattleState()
