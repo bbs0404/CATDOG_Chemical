@@ -38,14 +38,14 @@ public class ObjectMob : ObjectUnit
             switch (mob_seed)
             {
                 case 0:
-                    InventoryManager.Inst().setProton(InventoryManager.Inst().getProton() + Random.Range(6, 11));
-                    InventoryManager.Inst().setNeutron(InventoryManager.Inst().getNeutron() + Random.Range(2, 7));
-                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(4, 9));
+                    InventoryManager.proton += Random.Range(6, 11);
+                    InventoryManager.neutron += Random.Range(2, 7);
+                    InventoryManager.electron += Random.Range(4, 9);
                     break;
                 case 1:
-                    InventoryManager.Inst().setProton(InventoryManager.Inst().getProton() + Random.Range(2, 7));
-                    InventoryManager.Inst().setNeutron(InventoryManager.Inst().getNeutron() + Random.Range(4, 9));
-                    InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(6, 11));
+                    InventoryManager.proton += Random.Range(2, 7);
+                    InventoryManager.neutron += Random.Range(4, 9);
+                    InventoryManager.electron += Random.Range(6, 11);
                     break;
             }
             Destroy(this.gameObject);

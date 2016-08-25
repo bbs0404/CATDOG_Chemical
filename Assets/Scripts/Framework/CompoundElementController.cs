@@ -135,9 +135,9 @@ public class CompoundElementController : MonoBehaviour {
 	public static int tmp = 0;
 	public void foo() {
 		SetElementNumber (++tmp);
-		inventoryManager.setProton (inventoryManager.getProton () + 2);
-		inventoryManager.setNeutron (inventoryManager.getNeutron () + 2);
-		inventoryManager.setElectron (inventoryManager.getElectron () + 100);
+        InventoryManager.proton += 2;
+		InventoryManager.neutron += 2;
+		InventoryManager.electron += 100;
 	}
 
 
@@ -146,9 +146,9 @@ public class CompoundElementController : MonoBehaviour {
 		int requireNeutronNum = CalculateNeutronNumber (ElementNumber);
 		int requireElectronNum = CalculateElectronNumber (ElementNumber);
 		return (
-		    inventoryManager.getProton () >= requireProtonNum &&
-		    inventoryManager.getNeutron () >= requireNeutronNum &&
-		    inventoryManager.getElectron () >= requireElectronNum &&
+		    InventoryManager.proton >= requireProtonNum &&
+		    InventoryManager.neutron >= requireNeutronNum &&
+		    InventoryManager.electron >= requireElectronNum &&
 			!(InventoryManager.Element [this.ElementNumber - 1])
 		);
 	}
@@ -158,15 +158,15 @@ public class CompoundElementController : MonoBehaviour {
 		// Set numbers.
 		int requireProtonNum = CalculateProtonNumber(ElementNumber);
 		ProtonNumberLabel.text = string.Format("X {0}", requireProtonNum);
-		ProtonNumberLabel.color = inventoryManager.getProton () < requireProtonNum ? Color.red : Color.white;
+		ProtonNumberLabel.color = InventoryManager.proton < requireProtonNum ? Color.red : Color.white;
 
 		int requireNeutronNum = CalculateNeutronNumber (ElementNumber);
 		NeutronNumberLabel.text = string.Format("X {0}", requireNeutronNum);
-		NeutronNumberLabel.color = inventoryManager.getNeutron () < requireNeutronNum ? Color.red : Color.white;
+		NeutronNumberLabel.color = InventoryManager.neutron < requireNeutronNum ? Color.red : Color.white;
 
 		int requireElectronNum = CalculateElectronNumber (ElementNumber);
 		ElectronNumberLabel.text = string.Format("{0} elec", requireElectronNum);
-		ElectronNumberLabel.color = inventoryManager.getElectron () < requireElectronNum ? Color.red : Color.white;
+		ElectronNumberLabel.color = InventoryManager.electron < requireElectronNum ? Color.red : Color.white;
 
 		// Enable/Disable Compound Button
 		if (IsCompoundable()) {
@@ -192,9 +192,9 @@ public class CompoundElementController : MonoBehaviour {
 		int requireProtonNum = CalculateProtonNumber(ElementNumber);
 		int requireNeutronNum = CalculateNeutronNumber (ElementNumber);
 		int requireElectronNum = CalculateElectronNumber (ElementNumber);
-		inventoryManager.setProton (inventoryManager.getProton () - requireProtonNum);
-		inventoryManager.setNeutron (inventoryManager.getNeutron () - requireNeutronNum);
-		inventoryManager.setElectron (inventoryManager.getElectron () - requireElectronNum);
+		InventoryManager.proton -= requireProtonNum;
+		InventoryManager.neutron -= requireNeutronNum;
+		InventoryManager.electron -= requireElectronNum;
 
 		string msg = string.Format ("양성자 {0}개, 중성자 {1}개, 전자 {2}개 소모", requireProtonNum, requireNeutronNum, requireElectronNum);
 
