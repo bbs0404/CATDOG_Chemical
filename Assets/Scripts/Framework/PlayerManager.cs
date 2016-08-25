@@ -10,7 +10,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager> {
 
     public static int playerLevel = 0;
     public static int playerEXP = 0;
-    public static int villageProgress = 0; //플레이어의 최대 마을거리
+    public static int villageProgress = 4; //플레이어의 최대 마을거리
 
     void Start()
     {
