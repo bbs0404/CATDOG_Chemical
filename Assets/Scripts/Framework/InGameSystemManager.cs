@@ -451,6 +451,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                         enemies[i].setMoveable(true);
                     }
                 }
+                enemies[i].mobDead();
             }
             currentTurn = GameTurn.ENEMY;
             cost = ++maxCost;
