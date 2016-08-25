@@ -23,7 +23,7 @@ public class TitleSceneController : SingletonBehaviour<TitleSceneController> {
                 InGameSystemManager.villageNum = 0;
                 InventoryManager.Element.data = new bool[20] { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
                 InventoryManager.Raw.data = new bool[4] { true, false, false, false };
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene("Tutorial");
                 //InGameSystemManager.villageNum = 0;
                 break;
             case "LoadGameButton":
