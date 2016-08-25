@@ -48,7 +48,7 @@ public class ObjectMob : ObjectUnit
                     InventoryManager.Inst().setElectron(InventoryManager.Inst().getElectron() + Random.Range(6, 11) * getLevel());
                     break;
             }
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 

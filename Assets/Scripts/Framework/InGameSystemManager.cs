@@ -25,6 +25,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     [SerializeField]
     private int distance = 5; //마을간의 거리
     private float waitSecond = 0;
+    [SerializeField]
     private int mob_number;
 
     [SerializeField]
@@ -39,6 +40,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
 
     [SerializeField]
     private List<GameObject> mobPrefab;
+    [SerializeField]
     private ObjectMob[] enemies;
 
     [SerializeField]
@@ -177,53 +179,57 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
             if (skill.Value.global) {
                 var mobs = FindObjectsOfType<ObjectMob>();
                 foreach ( var i in mobs ) {
-                    if (Random.Range(0, 10) < mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel())
+                    if (i.gameObject.activeSelf)
                     {
-                        Debug.Log(i.name + "does not take any damage");
-                        continue; //회피
-                    }
-                    if ((int)(i.getType() + 1) % 3 == (int)skill.Value.type)
-                    {
-                        if (i.getStatusEffect() == StatusEffect.Burn)
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * burnDamage));
-                        else if (i.getStatusEffect() == StatusEffect.Frostbite)
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * freezeDamage));
-                        else
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5));
-                        Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
-                    }
-                    else if ((int)(i.getType() + 2) % 3 == (int)skill.Value.type)
-                    {
-                        if (i.getStatusEffect() == StatusEffect.Burn)
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * burnDamage));
-                        else if (i.getStatusEffect() == StatusEffect.Frostbite)
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * freezeDamage));
-                        else
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5));
-                        Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
-                    }
-                    else
-                    {
-                        if (i.getStatusEffect() == StatusEffect.Burn)
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * burnDamage));
-                        else if (i.getStatusEffect() == StatusEffect.Frostbite)
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * freezeDamage));
-                        else
-                            i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage)));
-                    }
-                    if (skill.Value.statusEffect != StatusEffect.None)
-                    {
-                        if (Random.Range(0, 20) < 1)
+                        if (Random.Range(0, 10) < mob.getLevel() - PlayerManager.Inst().getPlayer().getLevel())
                         {
-                            i.setStatusEffect(skill.Value.statusEffect);
-                            i.setStatusRemainTurn(Random.Range(4, 8));
-                            Debug.Log(i.name + " get " + skill.Value.statusEffect.ToString());
+                            Debug.Log(i.name + "does not take any damage");
+                            continue; //회피
+                        }
+                        if ((int)(i.getType() + 1) % 3 == (int)skill.Value.type)
+                        {
+                            if (i.getStatusEffect() == StatusEffect.Burn)
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * burnDamage));
+                            else if (i.getStatusEffect() == StatusEffect.Frostbite)
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5 * freezeDamage));
+                            else
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 1.5));
+                            Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 1.5) + " damages");
+                        }
+                        else if ((int)(i.getType() + 2) % 3 == (int)skill.Value.type)
+                        {
+                            if (i.getStatusEffect() == StatusEffect.Burn)
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * burnDamage));
+                            else if (i.getStatusEffect() == StatusEffect.Frostbite)
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5 * freezeDamage));
+                            else
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * 0.5));
+                            Debug.Log(i.name + " is attacked and get " + (int)((skill.Value.damage + damage) * 0.5) + " damages");
+                        }
+                        else
+                        {
+                            if (i.getStatusEffect() == StatusEffect.Burn)
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * burnDamage));
+                            else if (i.getStatusEffect() == StatusEffect.Frostbite)
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage) * freezeDamage));
+                            else
+                                i.GetDamaged((int)((player.getAttack() * skill.Value.damage + damage)));
+                        }
+                        if (skill.Value.statusEffect != StatusEffect.None)
+                        {
+                            if (Random.Range(0, 20) < 1)
+                            {
+                                i.setStatusEffect(skill.Value.statusEffect);
+                                i.setStatusRemainTurn(Random.Range(4, 8));
+                                Debug.Log(i.name + " get " + skill.Value.statusEffect.ToString());
+                            }
                         }
                     }
                 }
                 Debug.Log(mob.name + " is attacked and get " + damage.ToString() + " damages");
                 foreach ( var i in mobs ) {
-                    i.mobDead();
+                    if (i.gameObject.activeSelf)
+                        i.mobDead();
                 }
             }
             else {
@@ -264,7 +270,7 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
                     }
                     if (skill.Value.statusEffect != StatusEffect.None)
                     {
-                        if (Random.Range(0, 10) < 1)
+                        if (Random.Range(0, 10) < 10)
                         {
                             mob.setStatusEffect(skill.Value.statusEffect);
                             mob.setStatusRemainTurn(Random.Range(4, 8));
@@ -316,7 +322,8 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         maxCost = cost = 1;
 
         InGameUIManager.Inst().costTextUpdate();
-
+        for (int i = 0; i < enemies.Length; ++i)
+            Destroy(enemies[i].gameObject);
         enemies = new ObjectMob[mob_number];
         for (int i = 0; i < mob_number; ++i)
         {
@@ -397,24 +404,27 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
     {
         for (int i = 0; i < enemies.Length; ++i)
         {
-            if (!enemies[i].isMoveable())
-                continue;
-            if (enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend() > 0)
+            if (enemies[i].gameObject.activeSelf)
             {
-                PlayerManager.Inst().getPlayer().GetDamaged(enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend());
-                Debug.Log("Player get damaged");
-            }
-            else
-            {
-                PlayerManager.Inst().getPlayer().GetDamaged(10);
-                Debug.Log("Player get damaged");
-            }
-            if (enemies[i].getStatus() != StatusEffect.None)
-            {
-                if (Random.Range(0, 20) < 1)
+                if (!enemies[i].isMoveable())
+                    continue;
+                if (enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend() > 0)
                 {
-                    PlayerManager.Inst().getPlayer().setStatusEffect(enemies[i].getStatus());
-                    PlayerManager.Inst().getPlayer().setStatusRemainTurn(Random.Range(4, 8));
+                    PlayerManager.Inst().getPlayer().GetDamaged(enemies[i].getAttack() - PlayerManager.Inst().getPlayer().getDefend());
+                    Debug.Log("Player get damaged");
+                }
+                else
+                {
+                    PlayerManager.Inst().getPlayer().GetDamaged(10);
+                    Debug.Log("Player get damaged");
+                }
+                if (enemies[i].getStatus() != StatusEffect.None)
+                {
+                    if (Random.Range(0, 20) < 1)
+                    {
+                        PlayerManager.Inst().getPlayer().setStatusEffect(enemies[i].getStatus());
+                        PlayerManager.Inst().getPlayer().setStatusRemainTurn(Random.Range(4, 8));
+                    }
                 }
             }
         }
@@ -434,24 +444,27 @@ public class InGameSystemManager : SingletonBehaviour<InGameSystemManager>
         {
             for (int i = 0; i < enemies.Length; ++i)
             {
-                if (enemies[i].getStatusEffect() == StatusEffect.Corrosion)
+                if (enemies[i].gameObject.activeSelf)
                 {
-                    enemies[i].GetDamaged((int)(enemies[i].getMaxHP() * 0.05f));
-                }
-                if (enemies[i].getStatusEffect() == StatusEffect.Frostbite)
-                {
-                    enemies[i].setMoveable(!enemies[i].isMoveable());
-                }
-                if (enemies[i].getStatusEffect() != StatusEffect.None)
-                {
-                    enemies[i].setStatusRemainTurn(enemies[i].getStatusRemainTurn() - 1);
-                    if (enemies[i].getStatusRemainTurn() <= 0)
+                    if (enemies[i].getStatusEffect() == StatusEffect.Corrosion)
                     {
-                        enemies[i].setStatusEffect(StatusEffect.None);
-                        enemies[i].setMoveable(true);
+                        enemies[i].GetDamaged((int)(enemies[i].getMaxHP() * 0.05f));
+                        enemies[i].mobDead();
+                    }
+                    if (enemies[i].getStatusEffect() == StatusEffect.Frostbite)
+                    {
+                        enemies[i].setMoveable(!enemies[i].isMoveable());
+                    }
+                    if (enemies[i].getStatusEffect() != StatusEffect.None)
+                    {
+                        enemies[i].setStatusRemainTurn(enemies[i].getStatusRemainTurn() - 1);
+                        if (enemies[i].getStatusRemainTurn() <= 0)
+                        {
+                            enemies[i].setStatusEffect(StatusEffect.None);
+                            enemies[i].setMoveable(true);
+                        }
                     }
                 }
-                enemies[i].mobDead();
             }
             currentTurn = GameTurn.ENEMY;
             cost = ++maxCost;
